@@ -43,7 +43,7 @@ namespace MyInput {
 
 namespace MySparseMatrix {
 
-	int InitMatrix (SparseMatrix &Matrix, int& not_null_int, int N, int M) {
+	int InitMatrix (SparseMatrix &Matrix, int& not_null_int, const int N, const int M) {
 		List* head = nullptr;
 		List* head2 = nullptr;
 		List* ptr1 = nullptr;
@@ -122,7 +122,7 @@ namespace MySparseMatrix {
 		}
 	}
 
-	void ShowSparseMatrix (SparseMatrix Matrix, int N) {
+	void ShowSparseMatrix (const SparseMatrix Matrix, const int N) {
 		List* print = Matrix.NotNull;
 		List* index = Matrix.IndexRow;
 		std::cout << std::endl << "Data:" << std::endl;
@@ -132,7 +132,7 @@ namespace MySparseMatrix {
 		}
 		std::cout << std::endl << "Pointers:" << std::endl;
 		for (int i = 0; i < N + 1; i++) {
-			std::cout << Matrix.IndexPointers[i] << std::endl;
+			std::cout << Matrix.IndexPointers[i] << " ";
 		}
 		std::cout << std::endl << "Index:" << std::endl;
 		while (index) {
@@ -142,7 +142,7 @@ namespace MySparseMatrix {
 		std::cout << std::endl;
 	}
 
-	void SelectionRow (List* index_start, List* row_start, int int_count, int M, int index_row) { //int x1x2
+	void SelectionRow (List* index_start, List* row_start, const int int_count, const int M, const int index_row) { //int x1x2
 		int sum = 0;
 		int* new_row = new int [M];
 		for (int i = 0; i < M; i++) {
@@ -165,7 +165,7 @@ namespace MySparseMatrix {
 		delete [] new_row;
 	}
 
-	int FindRowInSparseMatrix (SparseMatrix &Matrix, int N, int M) {
+	int FindRowInSparseMatrix (SparseMatrix &Matrix, const int N, const int M) {
 		int index_row = -1;
 		int INPUT_ERROR;
 		std::cout << std::endl << "Enter row to find:" << std::endl;
@@ -197,7 +197,7 @@ namespace MySparseMatrix {
 		return 22;
 	}
 
-	void ShowNotSparseMatrix (SparseMatrix &Matrix, int N, int M) {
+	void ShowNotSparseMatrix (const SparseMatrix Matrix, const int N, const int M) {
 		std::cout << std::endl << "Your matrix:" << std::endl;
 		int prev_index;
 		List* index = Matrix.IndexRow;
