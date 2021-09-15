@@ -3,25 +3,23 @@
 
 namespace MyInput {
 
-	using namespace std;
-
 	void GetInt (int& new_int, int& error) {
 		error = 1;
 		while (1) {
-			cin >> new_int;
-			if (cin.eof()) {
-				cout << "End" << endl;
+			std::cin >> new_int;
+			if (std::cin.eof()) {
+				std::cout << "End" << std::endl;
 				error = 0;
 				break;
 			}
-			if (cin.fail()) {
-				cout << "Incorrect input. Try again" << endl;
-				cin.clear();
-				while(cin.get()!='\n');
+			if (std::cin.fail()) {
+				std::cout << "Incorrect input. Try again" << std::endl;
+				std::cin.clear();
+				while(std::cin.get()!='\n');
 				error = 2;
 			} else {
-				cin.clear();
-				while(cin.get()!='\n');
+				std::cin.clear();
+				while(std::cin.get()!='\n');
 				error = 1;
 				break;
 			}
@@ -35,7 +33,7 @@ namespace MyInput {
 				break;
 			}
 			if (size <= 0) {
-				cout << "Incorrect input. Try again" << endl;
+				std::cout << "Incorrect input. Try again" << std::endl;
 			} else {
 				break;
 			}
@@ -44,8 +42,6 @@ namespace MyInput {
 }
 
 namespace MySparseMatrix {
-
-	using namespace std;
 
 	int InitMatrix (SparseMatrix &Matrix, int& not_null_int, int N, int M) {
 		List* head = nullptr;
@@ -61,7 +57,7 @@ namespace MySparseMatrix {
 		int INPUT_ERROR = 1;
 		for (int i = 0; i < N; i++) {
 			index_row = -1;
-			cout << "Enter new row of matrix (NxM):" << endl;
+			std::cout << "Enter new row of matrix (NxM):" << std::endl;
 			for (int j = 0; j < M; j++) {
 				do {
 					MyInput::GetInt(data, INPUT_ERROR);
@@ -129,21 +125,21 @@ namespace MySparseMatrix {
 	void ShowSparseMatrix (SparseMatrix Matrix, int N) {
 		List* print = Matrix.NotNull;
 		List* index = Matrix.IndexRow;
-		cout << endl << "Data:" << endl;
+		std::cout << std::endl << "Data:" << std::endl;
 		while (print) {
-			cout << print->a << " ";
+			std::cout << print->a << " ";
 			print = print->next;
 		}
-		std::cout << endl << "Pointers:" << endl;
+		std::cout << std::endl << "Pointers:" << std::endl;
 		for (int i = 0; i < N + 1; i++) {
-			cout << Matrix.IndexPointers[i] << " ";
+			std::cout << Matrix.IndexPointers[i] << std::endl;
 		}
-		cout << endl << "Index:" << endl;
+		std::cout << std::endl << "Index:" << std::endl;
 		while (index) {
-			cout << index->a << " ";
+			std::cout << index->a << " ";
 			index = index->next;
 		}
-		cout << std::endl;
+		std::cout << std::endl;
 	}
 
 	void SelectionRow (List* index_start, List* row_start, int int_count, int M, int index_row) { //int x1x2
@@ -162,9 +158,9 @@ namespace MySparseMatrix {
 			}
 		}
 		new_row[index_row - 1] = sum;
-		cout << endl << "new row: " << endl;
+		std::cout << std::endl << "new row: " << std::endl;
 		for (int i = 0; i < M; i++) {
-			cout << new_row[i] << " ";
+			std::cout << new_row[i] << " ";
 		}
 		delete [] new_row;
 	}
@@ -172,7 +168,7 @@ namespace MySparseMatrix {
 	int FindRowInSparseMatrix (SparseMatrix &Matrix, int N, int M) {
 		int index_row = -1;
 		int INPUT_ERROR;
-		cout << endl << "Enter row to find:" << endl;
+		std::cout << std::endl << "Enter row to find:" << std::endl;
 		do {
 			MyInput::GetInt(index_row, INPUT_ERROR);
 		} while (INPUT_ERROR == 2);
@@ -180,14 +176,14 @@ namespace MySparseMatrix {
 			return -22;
 		}
 		if (index_row > N || index_row <= 0) {
-			cout << "There no this row" << endl;
+			std::cout << "There no this row" << std::endl;
 			return 11;
 		}
 		List* start = Matrix.NotNull;
 		List* index_start = Matrix.IndexRow;
 		int int_count = Matrix.IndexPointers[index_row] - Matrix.IndexPointers[index_row - 1];
 		if (int_count == 0) {
-			cout << "Row has only nulls" << endl;
+			std::cout << "Row has only nulls" << std::endl;
 		} else {
 			for (int i = 0; i < Matrix.IndexPointers[index_row - 1]; i++) {
 				if (start && index_start) {
@@ -197,27 +193,27 @@ namespace MySparseMatrix {
 			}
 			SelectionRow(index_start, start, int_count, M, index_row + 1);
 		}
-		cout << endl << endl;
+		std::cout << std::endl << std::endl;
 		return 22;
 	}
 
 	void ShowNotSparseMatrix (SparseMatrix &Matrix, int N, int M) {
-		cout << endl << "Your matrix:" << endl;
+		std::cout << std::endl << "Your matrix:" << std::endl;
 		int prev_index;
 		List* index = Matrix.IndexRow;
 		List* data = Matrix.NotNull;
 		for (int row = 0; row < N; row++) {
 			prev_index = -1;
 			int int_count_in_the_row = Matrix.IndexPointers[row + 1] - Matrix.IndexPointers[row];
-			cout << "==" << row + 1 << "==  ";
+			std::cout << "==" << row + 1 << "==  ";
 			for (int i = 0; i < int_count_in_the_row; i++) {
 				if (index) {
 					for (prev_index; prev_index < index->a - 1; prev_index++) {
-						cout << " 0 ";
+						std::cout << " 0 ";
 					}
 				}
 				if (data) {
-					cout << " " << data->a << " ";
+					std::cout << " " << data->a << " ";
 				}
 				if (index && data) {
 					prev_index = index->a;
@@ -226,9 +222,9 @@ namespace MySparseMatrix {
 				}
 			}
 			for (prev_index; prev_index < M - 1; prev_index++) {
-				cout << " 0 ";
+				std::cout << " 0 ";
 			}
-			cout << endl;
+			std::cout << std::endl;
 		}
 	}
 
