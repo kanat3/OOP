@@ -16,7 +16,7 @@ namespace MySparseMatrix {
 	int InitMatrix (SparseMatrix &Matrix, int& not_null_int, const int N, const int M);
 	void FreeMatrix (SparseMatrix& Matrix);
 	void ShowSparseMatrix (const SparseMatrix Matrix, const int N);
-	void SelectionRow (List* index_start, List* row_start, const int int_count, const int M, const int index_row);
+	void SelectionRow (List* index_start, List* row_start, const int int_count, const int M, const int index_row, const int choice);
 	int FindRowInSparseMatrix (SparseMatrix &Matrix, const int N, const int M);
 	void ShowNotSparseMatrix (const SparseMatrix Matrix, const int N, const int M);
 	int GetSizeOfMatrix (int& N, int& M);
@@ -24,7 +24,6 @@ namespace MySparseMatrix {
 }
 
 namespace MyInput {
-
 	void GetInt (int& new_int, int& error);
 	void GetUInt(int& size, int& error);
 
