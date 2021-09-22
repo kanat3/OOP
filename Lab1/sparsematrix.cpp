@@ -212,7 +212,8 @@ namespace MySparseMatrix {
 				}
 			}
 		}
-		new_row[index_row - 1] = sum;
+		std::cout << index_row;
+		new_row[index_row - 2] = sum;
 		std::cout << std::endl << "new row: " << std::endl;
 		for (int i = 0; i < M; i++) {
 			std::cout << new_row[i] << " ";
