@@ -54,7 +54,7 @@ namespace MySparseMatrix {
 			catch (std::bad_alloc)
 		{
 			std::cerr << "Memory error" << std::endl;
-			return -7;
+			return MEMORY_ERROR;
 		}
 		Matrix.IndexPointers[0] = 0;
 		not_null_int = 0;
@@ -130,14 +130,25 @@ namespace MySparseMatrix {
 			}
 		}
 		if (MEMORY_ERROR) {
-			return -7;
+			return MEMORY_ERROR;
 		}
 		if (INPUT_ERROR == -22) {
-			return -22; // eof, exit
+			List* to_delete = nullptr;
+			while (head) {
+				to_delete = head;
+				head = head->next;
+				delete to_delete;
+			}
+			while (head2) {
+				to_delete = head2;
+				head2 = head2->next;
+				delete to_delete;
+			}
+			return INPUT_EOF; // eof, exit
 		}
 		Matrix.NotNull = head;
 		Matrix.IndexRow = head2;
-		return 22;
+		return GOOD;
 	}
 
 	void FreeMatrix (SparseMatrix& Matrix) {
@@ -175,93 +186,76 @@ namespace MySparseMatrix {
 		std::cout << std::endl;
 	}
 
-	void SelectionRow (List* index_start, List* row_start, const int int_count, const int M, const int index_row, const int choice) { //int x1x2
-		int sum = 0;
-		int* new_row = new int [M];
-		for (int i = 0; i < M; i++) {
-			new_row[i] = 0;
+	int Selection1 (int a) {
+		if ((a >= 1 && a <= 9) || (a <= -1 && a >= -9)) {
+			return 1;
+		} else {
+			return 0;
 		}
-		if (choice == 1) {
-			for (int k = 0; k < int_count; k++) {
-				if (row_start && ((row_start->a >= 1 && row_start->a <= 9) || (row_start->a <= -1 && row_start->a >= -9))) {
-					sum += row_start->a;
-				}
-				if (row_start && index_start) {
-					row_start = row_start->next;
-					index_start = index_start->next;
-				}
-			}
-		} else if (choice == 2) {
-			for (int k = 0; k < int_count; k++) {
-				if (row_start && ((row_start->a >= 10 && row_start->a <= 99) || (row_start->a <= -10 && row_start->a >= -99))) {
-					sum += row_start->a;
-				}
-				if (row_start && index_start) {
-					row_start = row_start->next;
-					index_start = index_start->next;
-				}
-			}
-		} else if (choice == 3) {
-			for (int k = 0; k < int_count; k++) {
-				if (row_start && ((row_start->a >= 100 && row_start->a <= 999) || (row_start->a <= -100 && row_start->a >= -999))) {
-					sum += row_start->a;
-				}
-				if (row_start && index_start) {
-					row_start = row_start->next;
-					index_start = index_start->next;
-				}
-			}
-		}
-		std::cout << index_row;
-		new_row[index_row - 2] = sum;
-		std::cout << std::endl << "new row: " << std::endl;
-		for (int i = 0; i < M; i++) {
-			std::cout << new_row[i] << " ";
-		}
-		delete [] new_row;
 	}
 
-	int FindRowInSparseMatrix (SparseMatrix &Matrix, const int N, const int M) {
-		int index_row = -1;
-		int choice = -1;
-		int INPUT_ERROR;
-		std::cout << std::endl << "Enter row to find:" << std::endl;
-		do {
-			MyInput::GetInt(index_row, INPUT_ERROR);
-		} while (INPUT_ERROR == 2);
-		if (!INPUT_ERROR) {
-			return -22;
-		}
-		if (index_row > N || index_row <= 0) {
-			std::cout << "There no this row" << std::endl;
-			return 11;
-		}
-		List* start = Matrix.NotNull;
-		List* index_start = Matrix.IndexRow;
-		int int_count = Matrix.IndexPointers[index_row] - Matrix.IndexPointers[index_row - 1];
-		if (int_count == 0) {
-			std::cout << "Row has only nulls" << std::endl;
+	int Selection2 (int a) {
+		if ((a >= 10 && a <= 99) || (a <= -10 && a >= -99)) {
+			return 1;
 		} else {
-			for (int i = 0; i < Matrix.IndexPointers[index_row - 1]; i++) {
-				if (start && index_start) {
-					start = start->next;
-					index_start = index_start->next;
-				}
-			}
-			std::cout << std::endl << "Enter 1: Find i element in i row that more than 1 and less than 9:" << std::endl;
-			std::cout << "Enter 2: Find i element in i row that more than 10 and less than 99:" << std::endl;
-			std::cout << "Enter 3: Find i element in i row that more than 100 and less than 999:" << std::endl;
-			std::cout << std::endl << "Your choice:" << std::endl;
-			do {
-				MyInput::GetInt(choice, INPUT_ERROR);
-			} while (INPUT_ERROR == 2 || (choice <= 0 && choice >= 4));
-			if (!INPUT_ERROR) {
-				return -22;
-			}
-			SelectionRow(index_start, start, int_count, M, index_row + 1, choice);
+			return 0;
 		}
-		std::cout << std::endl << std::endl;
-		return 22;
+	}
+
+	int Selection3 (int a) {
+		if ((a >= 100 && a <= 999) || (a <= -100 && a >= -999)) {
+			return 1;
+		} else {
+			return 0;
+		}
+	}
+
+	int* FormingVector (SparseMatrix &Matrix, const int choice, const int N, const int M, int* new_vector) {
+		int result;
+		int sum;
+		List* data = Matrix.NotNull;
+		List* indexes = Matrix.IndexRow;
+		int int_count;
+		int (*Selection[3])(int a) = {Selection1, Selection2, Selection3};
+		for (int i = 0; i < N; i++) {
+			sum = 0;
+			int_count = Matrix.IndexPointers[i + 1] - Matrix.IndexPointers[i];
+			for (int j = 0; j < int_count; j++) {
+				result = Selection[choice - 1](data->a);
+				if (result) {
+					sum += data->a;
+				}
+				data = data->next;
+				indexes = indexes->next;
+			}
+			new_vector[i] = sum;
+		}
+		return new_vector;
+	}
+
+	int* AskIndexElement (SparseMatrix &Matrix, const int N, const int M, int* new_vector) {
+		int choice;
+		int INPUT_ERROR;
+		std::cout << std::endl << "Enter 1: Find elements in i row that more than 1 and less than 9:" << std::endl;
+		std::cout << "Enter 2: Find elements in i row that more than 10 and less than 99:" << std::endl;
+		std::cout << "Enter 3: Find elements in i row that more than 100 and less than 999:" << std::endl;
+		std::cout << std::endl << "Your choice:" << std::endl;
+		do {
+			MyInput::GetInt(choice, INPUT_ERROR);
+		} while (INPUT_ERROR == 2 || (choice <= 0 || choice >= 4));
+		if (!INPUT_ERROR) {
+			return nullptr;
+		}
+		FormingVector(Matrix, choice, N, M, new_vector);
+		return new_vector;
+	}
+
+	void ShowVector (const int* arr, const int N) {
+		std::cout << std::endl << "Your vector:" << std::endl;
+		for (int t = 0; t < N; t++) {
+			std::cout << arr[t] << " ";
+		}
+		std::cout << std::endl;
 	}
 
 	void ShowNotSparseMatrix (const SparseMatrix Matrix, const int N, const int M) {
@@ -299,12 +293,12 @@ namespace MySparseMatrix {
 		int INPUT_ERROR;
 		MyInput::GetUInt(N, INPUT_ERROR);
 		if(!INPUT_ERROR) {
-			return -11;
+			return INPUT_ERROR_BREAK;
 		}
 		MyInput::GetUInt(M, INPUT_ERROR);
 		if(!INPUT_ERROR) {
-			return -11;
+			return INPUT_ERROR_BREAK;
 		}
-		return 11;
+		return GOOD;
 	}
 }

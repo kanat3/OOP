@@ -1,5 +1,12 @@
 #pragma once
 
+enum Results {
+	GOOD = 1,
+	MEMORY_ERROR = -7,
+	INPUT_ERROR_BREAK = -11,
+	INPUT_EOF = -22
+};
+
 namespace MySparseMatrix {
 
 	struct SparseMatrix {
@@ -16,11 +23,11 @@ namespace MySparseMatrix {
 	int InitMatrix (SparseMatrix &Matrix, int& not_null_int, const int N, const int M);
 	void FreeMatrix (SparseMatrix& Matrix);
 	void ShowSparseMatrix (const SparseMatrix Matrix, const int N);
-	void SelectionRow (List* index_start, List* row_start, const int int_count, const int M, const int index_row, const int choice);
-	int FindRowInSparseMatrix (SparseMatrix &Matrix, const int N, const int M);
 	void ShowNotSparseMatrix (const SparseMatrix Matrix, const int N, const int M);
 	int GetSizeOfMatrix (int& N, int& M);
-
+	int* FormingVector (SparseMatrix &Matrix, const int choice, const int N, const int M, int* new_vector);
+	int* AskIndexElement (SparseMatrix &Matrix, const int N, const int M, int* new_vector);
+	void ShowVector (const int* arr, const int N);
 }
 
 namespace MyInput {
