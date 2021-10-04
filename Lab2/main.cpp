@@ -3,7 +3,11 @@
 #include "menu.h"
 
 int main (void) {
+	int error;
 	Lemniscata_Bernoulli::Lemniscata a;
-	Menu::DoChoise(a);
-	return 0;
+	error = Menu::DoChoise(a);
+	if (error == INPUT_ERROR) {
+		return INPUT_ERROR;
+	}
+	return GOOD;
 }

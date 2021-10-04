@@ -18,7 +18,7 @@ namespace Menu {
 	}
 
 	template <class T>
-	void GetInput (T& new_T, int& error) {
+	void GetCin (T& new_T, int& error) {
 		error = 1;
 		while (1) {
 			std::cin >> new_T;
@@ -40,42 +40,74 @@ namespace Menu {
 		}
 	}
 
+	template <class T>
+	int GetInput (T& new_T, int& error) {
+		do {
+			GetCin(new_T, error);
+		} while (error == 2);
+		if (!error) {
+			return 0;
+		}
+		return 1;
+	}
+
 	int GetChoise (void) {
-		int ERROR;
-		int choice;
+		int ERROR, choice;
+		ERROR = choice = 0;
 		do {
 			GetInput(choice, ERROR);
 		} while (ERROR == 2 || choice < 0 || choice > MENU_CHOISES);
 		if (!ERROR) {
-			return -1;
+			return INPUT_ERROR;
 		} else {
 			return choice;
 		}
 	}
 
-	void DoChoise (Lemniscata_Bernoulli::Lemniscata& a) {
-		int choice;
+	int DoChoise (Lemniscata_Bernoulli::Lemniscata& a) {
+		int choice = 0;
+		int error = 0;
 		do {
 			Menu::PrintChoises();
 			choice = Menu::GetChoise();
-			Menu::ChoiseCase(choice, a);
+			if (choice == INPUT_ERROR) {
+				break;
+			}
+			error = Menu::ChoiseCase(choice, a);
+			if (error == INPUT_ERROR) {
+				break;
+			}
 		} while (choice != 0);
+		if (error == INPUT_ERROR) {
+			return INPUT_ERROR;
+		} else {
+			return GOOD;
+		}
 	}
 
-	void ChoiseCase (int choice, Lemniscata_Bernoulli::Lemniscata& a) {
+	int ChoiseCase (int choice, Lemniscata_Bernoulli::Lemniscata& a) {
 		if (choice == 1) {
 			std::cout << "Lemniscate's equation: (x^2 + y^2)^2 = 2*c^2(x^2 - y^2)" << std::endl;
 			double db;
 			int ERROR;
 			std::cout << "Enter c: ";
-			GetInput(db, ERROR);
-			a.SetDistance(db);
+			if (!GetInput(db, ERROR)) {
+				return INPUT_ERROR;
+			}
+			try {
+				a.SetDistance(db);
+			} catch (std::invalid_argument) {
+				std::cout << "Exception: Invalid value" << std::endl;
+				return EXCEPTION;
+			}
 			std::cout << "Your distance: " << a.GetDistance() << std::endl;
 		} else if (choice == 2) {
 			int ERROR;
 			std::cout << "Enter the angle (in grad):";
 			double angle;
-			GetInput(angle, ERROR);
+			if (!GetInput(angle, ERROR)) {
+				return INPUT_ERROR;
+			}
 			a.SetAngle(angle);
 			std::cout << "Your angle: " << a.GetAngle() << std::endl;
 		} else if (choice == 3) {
@@ -84,9 +116,18 @@ namespace Menu {
 			std::cout << "Your radius of curvature depending on the angle: " << a.RadiusOfCurvature_ByAngle(a.GetAngle()) << std::endl;
 		} else if (choice == 5) {
 			int dist, ERROR;
+			double result;
 			std::cout << "Enter distance to the center: ";
-			GetInput(dist, ERROR);
-			std::cout << "Your radius of curvature depending on the distance to the center: " << a.RadiusOfCurvature_ByLength(dist) << std::endl;
+			if (!GetInput(dist, ERROR)) {
+				return INPUT_ERROR;
+			}
+			try {
+				result = a.RadiusOfCurvature_ByLength(dist);
+			} catch (std::invalid_argument) {
+				std::cout << "Exception: Invalid value" << std::endl;
+				return EXCEPTION;
+			}
+			std::cout << "Your radius of curvature depending on the distance to the center: " << result << std::endl;
 		} else if (choice == 6) {
 			std::cout << "Your area of the polar sector depending on the angle: " << a.AreaOfTheSector(a.GetAngle()) << std::endl;
 		} else if (choice == 7) {
@@ -94,6 +135,7 @@ namespace Menu {
 		} else if (choice == 8) {
 			std::cout << std::endl << "=== C is: " << a.GetDistance() << " | Angle is (in rad): " << a.GetAngle() << " ===" << std::endl << std::endl;
 		}
+		return GOOD;
 	}
 
 }
