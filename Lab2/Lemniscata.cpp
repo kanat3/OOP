@@ -1,0 +1,90 @@
+#include <iostream>
+#include <cmath>
+#include "Lemniscata.h"
+#include <exception>
+/*
+Вариант 9. Лемниската Бернулли
+Разработать класс, определяющий кривую – лемнискату Бернулли.
+Лемниската Бернулли – геометрическое место точек M,
+для которых произведение расстоянии MF1*MF2 = с2
+расстояний до концов данного отрезка F1F2 = 2c равно
+четверти квадрата длины этого отрезка.
+
+1) Определить состояние класса.
+2) Разработать необходимые конструкторы
+и методы получения и изменения параметров, определяющих кривую.
+3) Вернуть расстояние до центра в полярной
+системе координат в зависимости от угла для точки принадлежащей лемнискате.
+4) Вернуть радиуса кривизны в зависимости от угла полярного радиуса.
+5) Вернуть радиуса кривизны в зависимости от длины полярного радиуса.
+6) Вернуть площадь полярного сектора лемнискаты в
+зависимости от угла полярного радиуса.
+7) Вернуть площадь лемнискаты.
+Разработать диалоговую программу для тестирования класса.
+*/
+
+Lemniscata_Bernoulli::Lemniscata::Lemniscata (double distance, double angle) {
+	if (distance < 0) {
+		throw std::invalid_argument("Invalid value");
+	} else {
+		d = distance;
+	}
+	angle_in_rad = angle*PI/180;
+}
+
+void Lemniscata_Bernoulli::Lemniscata::SetDistance (double distance) {
+	if (distance < 0) {
+		throw std::invalid_argument("Invalid value");
+	} else {
+		d = distance;
+	}
+}
+
+void Lemniscata_Bernoulli::Lemniscata::SetAngle (double angle) {
+	angle_in_rad = angle*PI/180;
+}
+
+double Lemniscata_Bernoulli::Lemniscata::Calculate_U (double angle) const {
+	return sqrt(tan(PI/4 - angle));
+}
+
+double Lemniscata_Bernoulli::Lemniscata::Calculate_P (double angle) const {
+	return sqrt(2*pow(d, 2)*cos(2*angle));
+}
+
+double Lemniscata_Bernoulli::Lemniscata::Find_X (double angle) const {
+	return d*sqrt(2)*((Calculate_U(angle) + pow(Calculate_U(angle), 3))/((1 + pow(Calculate_U(angle), 4))));
+}
+
+double Lemniscata_Bernoulli::Lemniscata::Find_Y (double angle) const {
+	return d*sqrt(2)*((Calculate_U(angle) - pow(Calculate_U(angle), 3))/((1 + pow(Calculate_U(angle), 4))));
+}
+
+double Lemniscata_Bernoulli::Lemniscata::DistanceToTheCenter (double angle) const {
+	double x;
+	double y;
+	x = Find_X(angle);
+	y = Find_Y(angle);
+	std::cout << " X: " << x << " Y: " << y << " X^2 + Y^2: " << x*x + y*y << std::endl;
+	return sqrt(x*x + y*y);
+}
+
+double Lemniscata_Bernoulli::Lemniscata::Area (void) const {
+	return 2*pow(d, 2);
+}
+
+double Lemniscata_Bernoulli::Lemniscata::AreaOfTheSector (double angle) const {
+	return sin(2*angle)*pow(d, 2)/2;
+}
+
+double Lemniscata_Bernoulli::Lemniscata::RadiusOfCurvature_ByAngle (double angle) const {
+	return (2*pow(d, 2)/3)/Calculate_P(angle);
+}
+
+double Lemniscata_Bernoulli::Lemniscata::RadiusOfCurvature_ByLength (double length) const {
+	if (length < 0 || length > (d*sqrt(2))) {
+		throw std::invalid_argument("Invalid value");
+	} else {
+		return (2*pow(d, 2)/(3*length));
+	}
+}
