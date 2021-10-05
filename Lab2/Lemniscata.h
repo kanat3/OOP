@@ -13,6 +13,7 @@ namespace Lemniscata_Bernoulli {
 
 		double GetDistance () const { return d; }
 		double GetAngle () const { return angle_in_rad; }
+		double GetRadAngle () const { return 180*angle_in_rad/PI; }
 		void SetDistance (double distance = 5);
 		void SetAngle (double angle = 0.523); //30 grad
 

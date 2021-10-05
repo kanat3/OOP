@@ -4,7 +4,7 @@
 #include <exception>
 
 Lemniscata_Bernoulli::Lemniscata::Lemniscata (double distance, double angle) {
-	if (distance < 0) {
+	if (distance <= 0) {
 		throw std::invalid_argument("Invalid value");
 	} else {
 		d = distance;
@@ -13,7 +13,7 @@ Lemniscata_Bernoulli::Lemniscata::Lemniscata (double distance, double angle) {
 }
 
 void Lemniscata_Bernoulli::Lemniscata::SetDistance (double distance) {
-	if (distance < 0) {
+	if (distance <= 0) {
 		throw std::invalid_argument("Invalid value");
 	} else {
 		d = distance;
@@ -45,7 +45,6 @@ double Lemniscata_Bernoulli::Lemniscata::DistanceToTheCenter (double angle) cons
 	double y;
 	x = Find_X(angle);
 	y = Find_Y(angle);
-	std::cout << " X: " << x << " Y: " << y << " X^2 + Y^2: " << x*x + y*y << std::endl;
 	return sqrt(x*x + y*y);
 }
 
@@ -62,7 +61,7 @@ double Lemniscata_Bernoulli::Lemniscata::RadiusOfCurvature_ByAngle (double angle
 }
 
 double Lemniscata_Bernoulli::Lemniscata::RadiusOfCurvature_ByLength (double length) const {
-	if (length < 0 || length > (d*sqrt(2))) {
+	if (length <= 0 || length > (d*sqrt(2))) {
 		throw std::invalid_argument("Invalid value");
 	} else {
 		return (2*pow(d, 2)/(3*length));
