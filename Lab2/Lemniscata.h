@@ -15,7 +15,7 @@ namespace Lemniscata_Bernoulli {
 		double GetAngle () const { return angle_in_rad; }
 		double GetRadAngle () const { return 180*angle_in_rad/PI; }
 		void SetDistance (double distance = 5);
-		void SetAngle (double angle = 0.523); //30 grad
+		void SetAngle (double angle = PI/3); //30 grad
 
 		double DistanceToTheCenter (double angle) const;
 		double RadiusOfCurvature_ByAngle (double angle) const;
