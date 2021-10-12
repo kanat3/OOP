@@ -1,7 +1,7 @@
 #pragma once
 
 namespace Binary_Signal {
-	const int MAX_DURATION = 5;
+	const int MAX_DURATION = 10;
 	const int SIZE = 10;
 
 	typedef struct Signal_Parameter {
@@ -30,5 +30,6 @@ namespace Binary_Signal {
 		void DeleteSignal (int time, char* signal_duration);
 		void ShowClass (void) const;
 		void Test_Class (void); //заполение адекватными числами
+		void FreeClass (void) { size_now = 0; };
 	};
 }

@@ -5,8 +5,8 @@
 
 void Binary_Signal::Binary_Signal::Test_Class (void) {
 	size_now = 0;
-	const char* str[10] = {"10\n", "20\n", "30\n", "40\n", "50\n", "60\n", "70\n", "80\n", "90\n", "100\n"};
-	for (int i = 0; i < SIZE; i++) {
+	const char* str[4] = {"10", "20", "30", "40"};
+	for (int i = 0; i < 4; i++) {
 		signals[i].level = rand()%2;
 		strcpy(signals[i].duration, str[i]);
 		size_now++;
@@ -38,7 +38,7 @@ void Binary_Signal::Binary_Signal::ShowClass (void) const {
 }
 
 void Binary_Signal::Binary_Signal::SignalInversion (void) {
-	for (int i = 0; i < SIZE; i++) {
+	for (int i = 0; i < size_now; i++) {
 		if (signals[i].level == 1) {
 			signals[i].level = 0;
 		} else {
@@ -140,7 +140,6 @@ void Binary_Signal::Binary_Signal::SignalAddition (Binary_Signal to_add) {
 		std::cout << "Can't add" << std::endl;
 		return;
 	}
-	puts("HERE");
 	int index_add = 0;
 	for (int i = size_now; i < size_now + to_add.size_now; i++) {
 		signals[i].level = to_add.signals[index_add].level;
