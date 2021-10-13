@@ -8,13 +8,12 @@ namespace Menu {
 		std::cout << "=============This is lab for Lemniscata Bernoulli functions=============" << std::endl;
 		std::cout << "0. Exit" << std::endl;
 		std::cout << "1. Enter the distance between the focuses" << std::endl;
-		std::cout << "2. Enter the angle" << std::endl;
-		std::cout << "3. Return the distance to the center depending on the angle" << std::endl;
-		std::cout << "4. Return the radius of curvature depending on the angle" << std::endl;
-		std::cout << "5. Return the radius of curvature as a function of the length" << std::endl;
-		std::cout << "6. Return the area of the polar sector depending on the angle" << std::endl;
-		std::cout << "7. Return the square" << std::endl;
-		std::cout << "8. Show Lemniscata data" << std::endl;
+		std::cout << "2. Return the distance to the center depending on the angle" << std::endl;
+		std::cout << "3. Return the radius of curvature depending on the angle" << std::endl;
+		std::cout << "4. Return the radius of curvature as a function of the length" << std::endl;
+		std::cout << "5. Return the area of the polar sector depending on the angle" << std::endl;
+		std::cout << "6. Return the square" << std::endl;
+		std::cout << "7. Show Lemniscata data" << std::endl;
 	}
 
 	template <class T>
@@ -108,13 +107,16 @@ namespace Menu {
 			if (!GetInput(angle, ERROR)) {
 				return INPUT_ERROR;
 			}
-			a.SetAngle(angle);
-			std::cout << "Your angle: " << a.GetAngle() << std::endl;
+			std::cout << "Your distance to the center: " << a.DistanceToTheCenter(angle) << std::endl;
 		} else if (choice == 3) {
-			std::cout << "Your distance to the center: " << a.DistanceToTheCenter(a.GetAngle()) << std::endl;
+			int ERROR;
+			std::cout << "Enter the angle (in grad):";
+			double angle;
+			if (!GetInput(angle, ERROR)) {
+				return INPUT_ERROR;
+			}
+			std::cout << "Your radius of curvature depending on the angle: " << a.RadiusOfCurvature_ByAngle(angle) << std::endl;
 		} else if (choice == 4) {
-			std::cout << "Your radius of curvature depending on the angle: " << a.RadiusOfCurvature_ByAngle(a.GetAngle()) << std::endl;
-		} else if (choice == 5) {
 			int dist, ERROR;
 			double result;
 			std::cout << "Enter distance to the center: ";
@@ -128,12 +130,18 @@ namespace Menu {
 				return EXCEPTION;
 			}
 			std::cout << "Your radius of curvature depending on the distance to the center: " << result << std::endl;
+		} else if (choice == 5) {
+			int ERROR;
+			std::cout << "Enter the angle (in grad):";
+			double angle;
+			if (!GetInput(angle, ERROR)) {
+				return INPUT_ERROR;
+			}
+			std::cout << "Your area of the polar sector depending on the angle: " << a.AreaOfTheSector(angle) << std::endl;
 		} else if (choice == 6) {
-			std::cout << "Your area of the polar sector depending on the angle: " << a.AreaOfTheSector(a.GetAngle()) << std::endl;
-		} else if (choice == 7) {
 			std::cout << "Your area of Lemniscata: " << a.Area() << std::endl;
-		} else if (choice == 8) {
-			std::cout << std::endl << "=== C is: " << a.GetDistance() << " | Angle is (in rad): " << a.GetAngle() << " ===" << std::endl << std::endl;
+		} else if (choice == 7) {
+			std::cout << std::endl << "=== C is: " << a.GetDistance() << std::endl << std::endl;
 		}
 		return GOOD;
 	}

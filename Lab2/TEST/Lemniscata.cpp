@@ -3,13 +3,12 @@
 #include "Lemniscata.h"
 #include <exception>
 
-Lemniscata_Bernoulli::Lemniscata::Lemniscata (double distance, double angle) {
+Lemniscata_Bernoulli::Lemniscata::Lemniscata (double distance) {
 	if (distance <= 0) {
 		throw std::invalid_argument("Invalid value");
 	} else {
 		d = distance;
 	}
-	angle_in_rad = angle*PI/180;
 }
 
 void Lemniscata_Bernoulli::Lemniscata::SetDistance (double distance) {
@@ -18,10 +17,6 @@ void Lemniscata_Bernoulli::Lemniscata::SetDistance (double distance) {
 	} else {
 		d = distance;
 	}
-}
-
-void Lemniscata_Bernoulli::Lemniscata::SetAngle (double angle) {
-	angle_in_rad = angle*PI/180;
 }
 
 double Lemniscata_Bernoulli::Lemniscata::Calculate_U (double angle) const {
@@ -41,6 +36,7 @@ double Lemniscata_Bernoulli::Lemniscata::Find_Y (double angle) const {
 }
 
 double Lemniscata_Bernoulli::Lemniscata::DistanceToTheCenter (double angle) const {
+	angle = 180*angle/PI;
 	double x;
 	double y;
 	x = Find_X(angle);
@@ -53,10 +49,12 @@ double Lemniscata_Bernoulli::Lemniscata::Area (void) const {
 }
 
 double Lemniscata_Bernoulli::Lemniscata::AreaOfTheSector (double angle) const {
+	angle = 180*angle/PI;
 	return sin(2*angle)*pow(d, 2)/2;
 }
 
 double Lemniscata_Bernoulli::Lemniscata::RadiusOfCurvature_ByAngle (double angle) const {
+	angle = 180*angle/PI;
 	return (2*pow(d, 2)/3)/Calculate_P(angle);
 }
 

@@ -12,15 +12,6 @@ TEST(Constructor, PositiveInput) {
 	EXPECT_EQ(e.GetDistance(), 3.45678);
 	Lemniscata r(24345.7);
 	EXPECT_EQ(r.GetDistance(), 24345.7);
-	Lemniscata q(325, 90);
-	EXPECT_EQ(q.GetDistance(), 325);
-	EXPECT_EQ(q.GetRadAngle(), 90);
-	Lemniscata t(2345.436, 180);
-	EXPECT_EQ(t.GetRadAngle(), 180);
-	EXPECT_EQ(t.GetDistance(), 2345.436);
-	Lemniscata v(2, 0);
-	EXPECT_EQ(v.GetRadAngle(), 0);
-	EXPECT_EQ(v.GetDistance(), 2);
 }
 
 TEST(Constructor, NegativeInput) {
@@ -53,50 +44,32 @@ TEST(Distance_Setter, NegativeInput) {
 	EXPECT_ANY_THROW(a.SetDistance(-357.23456));
 }
 
-TEST(Angle_Setter, PositiveInput) {
-	Lemniscata a;
-	a.SetAngle(90);
-	EXPECT_EQ(a.GetRadAngle(), 90);
-	a.SetAngle(0);
-	EXPECT_EQ(a.GetRadAngle(), 0);
-	a.SetAngle(180);
-	EXPECT_EQ(a.GetRadAngle(), 180);
-}
-
-TEST(Angle_Setter, NegativeInput) {
-	Lemniscata a;
-	a.SetAngle(-90);
-	EXPECT_EQ(a.GetRadAngle(), -90);
-	a.SetAngle(-0);
-	EXPECT_EQ(a.GetRadAngle(), -0);
-	a.SetAngle(-180);
-	EXPECT_EQ(a.GetRadAngle(), -180);
-}
-
 TEST(DistanceToTheCenter, Input) {
 	Lemniscata a;
 	a.SetDistance(160);
-	EXPECT_EQ(a.DistanceToTheCenter(a.GetAngle()), 226.2741699796952162);
+	EXPECT_EQ(a.DistanceToTheCenter(0), 226.2741699796952162);
 	a.SetDistance(20);
-	EXPECT_EQ(a.DistanceToTheCenter(a.GetAngle()), 28.2842712474619020);
+	EXPECT_EQ(a.DistanceToTheCenter(0), 28.2842712474619020);
 	a.SetDistance(5);
-	EXPECT_EQ(a.DistanceToTheCenter(a.GetAngle()), 7.0710678118654755);
+	EXPECT_EQ(a.DistanceToTheCenter(0), 7.0710678118654755);
 }
 
 TEST(RadiusOfCurvature_ByAngle, Input) {
-	Lemniscata a(59, 10);
-	Lemniscata b(180, 179);
-	Lemniscata c(30, 360);
-	EXPECT_EQ(a.RadiusOfCurvature_ByAngle(a.GetAngle()), 28.69147308866308066);
-	EXPECT_EQ(b.RadiusOfCurvature_ByAngle(b.GetAngle()), 84.87867057719222430);
-	EXPECT_EQ(c.RadiusOfCurvature_ByAngle(c.GetAngle()), 14.14213562373094923);
+	Lemniscata a(59);
+	Lemniscata b(180);
+	Lemniscata c(30);
+	double abs_error = 0.001;
+	EXPECT_NEAR(a.RadiusOfCurvature_ByAngle(0), 27.8129, abs_error);
+	EXPECT_NEAR(b.RadiusOfCurvature_ByAngle(20), 427.865, abs_error);
+	EXPECT_NEAR(c.RadiusOfCurvature_ByAngle(46), 14.6775, abs_error);
 }
 
 TEST(RadiusOfCurvature_ByLength, Input) {
 	Lemniscata a;
-	EXPECT_EQ(a.RadiusOfCurvature_ByLength(100), 42.66666666666666430);
-	EXPECT_EQ(a.RadiusOfCurvature_ByLength(40), 106.66666666666667140);
-	EXPECT_EQ(a.RadiusOfCurvature_ByLength(17), 250.98039215686273451);
+	double abs_error = 0.001;
+	EXPECT_NEAR(a.RadiusOfCurvature_ByLength(100), 42.6666, abs_error);
+	EXPECT_NEAR(a.RadiusOfCurvature_ByLength(40), 106.6666, abs_error);
+	EXPECT_NEAR(a.RadiusOfCurvature_ByLength(17), 250.9803,abs_error);
 }
 
 TEST(RadiusOfCurvature_ByLength, ErrorInput) {
@@ -108,12 +81,9 @@ TEST(RadiusOfCurvature_ByLength, ErrorInput) {
 
 TEST(AreaOfTheSector, Input) {
 	Lemniscata a;
-	a.SetAngle(30);
-	EXPECT_EQ(a.AreaOfTheSector(a.GetAngle()), 2771.28129211020359435);
-	a.SetAngle(12);
-	EXPECT_EQ(a.AreaOfTheSector(a.GetAngle()), 1301.55725784256037514);
-	a.SetAngle(69);
-	EXPECT_EQ(a.AreaOfTheSector(a.GetAngle()), 2141.21794034834692866);
+	double abs_error = 0.01;
+	EXPECT_NEAR(a.AreaOfTheSector(10), 2217.8, abs_error);
+	EXPECT_NEAR(a.AreaOfTheSector(69), 1729.88, abs_error);
 }
 
 TEST(Area, Input) {

@@ -8,7 +8,7 @@ enum Results {
 
 namespace Menu {
 
-	const int MENU_CHOISES = 8;
+	const int MENU_CHOISES = 7;
 
 	int ChoiseCase (int choice, Lemniscata_Bernoulli::Lemniscata& a);
 	void PrintChoises (void);
