@@ -112,7 +112,7 @@ void Binary_Signal::Binary_Signal::SetSignalInTime (int time, Binary_Signal to_a
 	}
 }
 
-void Binary_Signal::Binary_Signal::DeleteSignal (int time, char* signal_duration) {
+void Binary_Signal::Binary_Signal::DeleteSignal (int time, const char* signal_duration) {
 	int sum = 0;
 	int index = -1;
 	while (sum < time && index < size_now - 1) {

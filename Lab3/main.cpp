@@ -11,5 +11,4 @@ int main () {
 		return INPUT_ERROR;
 	}
 	return GOOD;
-	return 0;
 }

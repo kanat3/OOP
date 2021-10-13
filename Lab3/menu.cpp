@@ -1,4 +1,5 @@
 #include <iostream>
+#include <cstring>
 #include "menu.h"
 #include "binary_signal.h"
 
@@ -88,16 +89,19 @@ namespace Menu {
 		if (choice == 1) {
 			int ERROR;
 			int level;
-			char duration[Binary_Signal::MAX_DURATION];
+			std::string str;
 			std::cout << "Enter level: ";
 			if (!GetInput(level, ERROR)) {
 				return INPUT_ERROR;
 			}
 			std::cout << "Enter duration: ";
-			if (!GetInput(duration, ERROR)) {
+			if (!GetInput(str, ERROR)) {
 				return INPUT_ERROR;
 			}
-			a.SetSignal(level, duration);
+			if (str.length() > Binary_Signal::MAX_DURATION) {
+				str.erase(Binary_Signal::MAX_DURATION, str.length() - Binary_Signal::MAX_DURATION);
+			}
+			a.SetSignal(level, str.c_str());
 		} else if (choice == 2) {
 			Binary_Signal::Binary_Signal b;
 			b.Test_Class();
@@ -125,16 +129,18 @@ namespace Menu {
 		} else if (choice == 5) {
 			int ERROR;
 			int time;
-			char duration[Binary_Signal::MAX_DURATION];
+			std::string str;
 			std::cout << "Enter time: ";
 			if (!GetInput(time, ERROR)) {
 				return INPUT_ERROR;
 			}
-			std::cout << "Enter duration: ";
-			if (!GetInput(duration, ERROR)) {
+			if (!GetInput(str, ERROR)) {
 				return INPUT_ERROR;
 			}
-			a.DeleteSignal(time, duration);
+			if (str.length() > Binary_Signal::MAX_DURATION) {
+				str.erase(Binary_Signal::MAX_DURATION, str.length() - Binary_Signal::MAX_DURATION);
+			}
+			a.DeleteSignal(time, str.c_str());
 		} else if (choice == 6) {
 			std::cout << "You are working with signal A" << std::endl;
 			a.ShowClass();
