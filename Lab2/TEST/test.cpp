@@ -75,9 +75,13 @@ TEST(RadiusOfCurvature_ByLength, Input) {
 
 TEST(RadiusOfCurvature_ByLength, ErrorInput) {
 	Lemniscata a;
-	EXPECT_ANY_THROW(a.RadiusOfCurvature_ByLength(999));
+	/*EXPECT_ANY_THROW(a.RadiusOfCurvature_ByLength(999));
 	EXPECT_ANY_THROW(a.RadiusOfCurvature_ByLength(-35.236));
-	EXPECT_ANY_THROW(a.RadiusOfCurvature_ByLength(-0));
+	EXPECT_ANY_THROW(a.RadiusOfCurvature_ByLength(-0));*/
+
+	EXPECT_THROW(a.RadiusOfCurvature_ByLength(999), std::invalid_argument);
+	EXPECT_THROW(a.RadiusOfCurvature_ByLength(-35.236), std::invalid_argument);
+	EXPECT_THROW(a.RadiusOfCurvature_ByLength(-0), std::invalid_argument);
 }
 
 TEST(AreaOfTheSector, Input) {
