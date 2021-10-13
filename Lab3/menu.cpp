@@ -134,6 +134,7 @@ namespace Menu {
 			if (!GetInput(time, ERROR)) {
 				return INPUT_ERROR;
 			}
+			std::cout << "Enter signal duration: ";
 			if (!GetInput(str, ERROR)) {
 				return INPUT_ERROR;
 			}
