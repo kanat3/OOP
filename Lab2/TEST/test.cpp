@@ -47,11 +47,12 @@ TEST(Distance_Setter, NegativeInput) {
 TEST(DistanceToTheCenter, Input) {
 	Lemniscata a;
 	a.SetDistance(160);
-	EXPECT_EQ(a.DistanceToTheCenter(0), 226.2741699796952162);
+	double abs_error = 0.001;
+	EXPECT_NEAR(a.DistanceToTheCenter(0), 226.2741, abs_error);
 	a.SetDistance(20);
-	EXPECT_EQ(a.DistanceToTheCenter(0), 28.2842712474619020);
+	EXPECT_NEAR(a.DistanceToTheCenter(0), 28.2842, abs_error);
 	a.SetDistance(5);
-	EXPECT_EQ(a.DistanceToTheCenter(0), 7.0710678118654755);
+	EXPECT_NEAR(a.DistanceToTheCenter(0), 7.0710, abs_error);
 }
 
 TEST(RadiusOfCurvature_ByAngle, Input) {
