@@ -106,7 +106,12 @@ namespace Menu {
 				if (!GetInput(str, ERROR)) {
 					return INPUT_ERROR;
 				}
-				a.SetSignal(str.c_str());
+				try {
+					a.SetSignal(str.c_str());
+				} catch (std::invalid_argument) {
+					std::cout << "Exception: Invalid value" << std::endl;
+					return EXCEPTION;
+				}
 			}
 			if (format_input == 2) {
 				int level;
@@ -137,7 +142,12 @@ namespace Menu {
 			if (!GetInput(time, ERROR)) {
 				return INPUT_ERROR;
 			}
-			a.SetSignalInTime(time, b);
+			try {
+				a.SetSignalInTime(time, b);
+			} catch (std::invalid_argument) {
+				std::cout << "Exception: Invalid value" << std::endl;
+				return EXCEPTION;
+			}
 			std::cout << "Your first signal now:" << std::endl;
 			a.ShowClassAsString();
 		} else if (choice == 3) {
@@ -169,9 +179,14 @@ namespace Menu {
 				if (!ERROR) {
 					return INPUT_ERROR;
 				}
-				Binary_Signal::Binary_Signal b(a, N);
-				puts("Your temporary object:");
-				b.ShowClassAsString();
+				try {
+					Binary_Signal::Binary_Signal b(a, N);
+					puts("Your temporary object:");
+					b.ShowClassAsString();
+				} catch (std::invalid_argument) {
+					std::cout << "Exception: Invalid value" << std::endl;
+					return EXCEPTION;
+				}
 			} else if (format_input == 3) {
 				Binary_Signal::Binary_Signal c;
 				puts("Generation........");
