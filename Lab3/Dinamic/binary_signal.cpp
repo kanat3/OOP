@@ -6,38 +6,34 @@
 
 namespace Binary_Signal {
 
-	void Binary_Signal::Test_Class (void) {
-		size_now = 0;
-		const char str[4] = {50, 51, 49, 51};
-		for (int i = 0; i < 4; i++) {
-			signals[i].level = rand()%2;
-			signals[i].duration = str[i];
-			size_now++;
+	void Binary_Signal::ShowClassAsTable (void) const { //*
+		Signal_Parameter* head = signals;
+		while (head != nullptr) {
+			std::cout << "level: " << head->level << " duration: " << head->duration << std::endl;
+			head = head->next;
 		}
-	}
-
-	void Binary_Signal::ShowClassAsTable (void) const {
-		for (int i = 0; i < size_now; i++) {
-			std::cout << "level: " << signals[i].level << " duration: " << signals[i].duration << std::endl;
-		}
-		std::cout << " {size: " << size_now << "}" << std::endl << std::endl;
-	}
-
-	void Binary_Signal::ShowClassAsString (void) const {
-		for (int i = 0; i < size_now; i++) {
-			for (int j = 0; j < signals[i].duration - '0'; j++) {
-				std::cout << signals[i].level;
-			}
-		}
-		std::cout << " {size: " << size_now << "}" << std::endl << std::endl;
+		std::cout << " {size: " << REAL_SIZE << "}" << std::endl << std::endl;
 		std::cout << std::endl;
 	}
 
-	int Binary_Signal::CheckAString (const char* string) const {
+	void Binary_Signal::ShowClassAsString (void) const { //*
+		Signal_Parameter* head = signals;
+		std::cout << std::endl;
+		while (head != nullptr) {
+			for (int i = 0; i < head->duration - '0'; i++) {
+				std::cout << head->level;
+			}
+			head = head->next;
+		}
+		std::cout << " {size: " << REAL_SIZE << "}" << std::endl << std::endl;
+		std::cout << std::endl;
+	}
+
+	int Binary_Signal::CheckAString (const char* string) const { //*
 		int len = strlen(string);
 		int error = 0;
 		int i = 0;
-		if (len/2 >= SIZE || len%2 != 0) {
+		if (len%2 != 0) {
 			return 0;
 		}
 		while (error == 0 && i < len) {
@@ -61,61 +57,145 @@ namespace Binary_Signal {
 		}
 	}
 
-	Binary_Signal::Binary_Signal (const char* signal) { //enter only in this format: 18020515 1/0 -level, 1-9 - duration
-		size_now = 0;
-		int j = 0;
+	Binary_Signal::Binary_Signal (const char* signal) { //* enter only in this format: 18020515 1/0 -level, 1-9 - duration
+		REAL_SIZE = 0;
+		int BAD_ALLOC = 0;
+		int j = 2;
+		int i = 1;
 		if (!CheckAString(signal)) {
 			throw std::invalid_argument("Bad string");
 		} else {
 			int len = strlen(signal);
-			for (int i = 0; i < len; i++) {
-				if (i%2 == 0) {
-					signals[j].level = signal[i] - '0';
-					size_now++;
-				} else {
-					signals[j].duration = signal[i];
-					j++;
+			REAL_SIZE = len/2;
+			Signal_Parameter* head;
+			try {
+				signals = new Signal_Parameter;
+			} catch (const std::bad_alloc& str) {
+				std::cout << "Allocation failed: " << str.what() << std::endl;
+				BAD_ALLOC = 1;
+			}
+			if (BAD_ALLOC == 0) {
+				head = signals;
+				signals->level = signal[0] - '0';
+				signals->duration = signal[1];
+				while (i < len/2) {
+					try {
+						signals->next = new Signal_Parameter;
+					} catch (const std::bad_alloc& str) {
+						std::cout << "Allocation failed: " << str.what() << std::endl;
+						BAD_ALLOC = 1;
+					}
+					if (BAD_ALLOC == 1) {
+						Signal_Parameter* to_delete;
+						while (head) {
+							puts("DELETE");
+							to_delete = head;
+							head = head->next;
+							delete to_delete;
+						}
+						break;
+					}
+					signals = signals->next;
+					signals->level = signal[j] - '0';
+					signals->duration = signal[j + 1];
+					j += 2;
+					i++;	
 				}
+				signals->next = nullptr;
+				signals = head;
 			}
 		}
 	}
 
-	Binary_Signal::Binary_Signal (const int bin_level, const char duration) {
-		size_now = 0;
-		for (int i = 0; i < SIZE; i++) {
-			signals[i].level = bin_level;
-			signals[i].duration = duration;
-			size_now++;
+	Binary_Signal::Binary_Signal (const int bin_level, const char duration, const int size) { //*
+		REAL_SIZE = 1;
+		int BAD_ALLOC = 0;
+		Signal_Parameter* head;
+		try {
+			signals = new Signal_Parameter;
+		} catch (const std::bad_alloc& str) {
+			std::cout << "Allocation failed: " << str.what() << std::endl;
+			BAD_ALLOC = 1;
+		}
+		if (BAD_ALLOC == 0) {
+			head = signals;
+			signals[0].level = bin_level;
+			signals[0].duration = duration;
+			for (int i = 1; i < size; i++) {
+				try {
+					signals->next = new Signal_Parameter;
+				} catch (const std::bad_alloc& str) {
+					std::cout << "Allocation failed: " << str.what() << std::endl;
+					BAD_ALLOC = 1;
+				}
+				if (BAD_ALLOC == 1) {
+					Signal_Parameter* to_delete;
+					while (head) {
+						to_delete = head;
+						head = head->next;
+						delete to_delete;
+					}
+					break;
+				} else {
+					signals = signals->next;
+					signals->level = bin_level;
+					signals->duration = duration;
+				}
+			}
+			if (BAD_ALLOC == 0) {
+				signals->next = nullptr;
+				signals = head;
+			}
 		}
 	}
 
 	void Binary_Signal::SignalInversion (void) {
-		for (int i = 0; i < size_now; i++) {
-			if (signals[i].level == 1) {
-				signals[i].level = 0;
-			} else {
-				signals[i].level = 1;
-			}
+		if (REAL_SIZE == 0) {
+			return;
 		}
+		Signal_Parameter* head = signals;
+		while (signals) {
+			if (signals->level == 1) {
+				signals->level = 0;
+			} else {
+				signals->level = 1;
+			}
+			signals = signals->next;
+		}
+		signals = head;
 	}
 
-	void Binary_Signal::GetSignal (Signal_Parameter& a, int index) const{
-		a.level = -1;
+	Binary_Signal::~Binary_Signal (void) {
+		Signal_Parameter* to_delete;
+		while (signals) {
+			to_delete = signals;
+			signals = signals->next;
+			delete to_delete;
+		}
+		signals = nullptr;
+		REAL_SIZE = 0;
+	}
+
+/*
+	Signal_Parameter Binary_Signal::GetSignal (int index) const {
+		Signal_Parameter a;
 		if ((index < 0 && index > SIZE) || index >= size_now) {
-			return;
+			throw std::invalid_argument("Bad index");
 		}
 		a.level = signals[index].level;
 		a.duration = signals[index].duration;
+		return a;
 	}
 
-	void Binary_Signal::GetSignal (Signal_Parameter& a, int bin_level, const char str) const{
-		a.level = -1;
+	Signal_Parameter Binary_Signal::GetSignal (int bin_level, const char str) const {
+		Signal_Parameter a;
 		for (int i = 0; i < SIZE; i++) {
 			if (signals[i].level == bin_level && signals[i].duration == str) {
 				a.level = signals[i].level;
 				a.duration = signals[i].duration;
 			}
 		}
+		return a;
 	}
 
 	void Binary_Signal::SetSignal (const int bin_level, const char signal_duration) {
@@ -333,5 +413,5 @@ namespace Binary_Signal {
 			signals[i].duration = a.signals[i].duration;
 		}
 		return *this;
-	}
+	}*/
 }

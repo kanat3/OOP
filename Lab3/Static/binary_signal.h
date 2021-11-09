@@ -27,8 +27,10 @@ namespace Binary_Signal {
 		int GetFullSignalDuration (void) const;
 
 		Binary_Signal GetBinarySignal (void);
-		void GetSignal (Signal_Parameter& a, int index) const; //получить сигнал по индексу
-		void GetSignal (Signal_Parameter& a, int bin_level, const char str) const; //получить определенный сигнал
+		//void GetSignal (Signal_Parameter& a, int index) const; //получить сигнал по индексу
+		Signal_Parameter GetSignal (int index) const;
+		//void GetSignal (Signal_Parameter& a, int bin_level, const char str) const; //получить определенный сигнал
+		Signal_Parameter GetSignal (int bin_level, const char str) const;
 		void SetSignal (const int bin_level = 0, const char signal_duration = 49); //добавление сигнала в конец
 		void SetSignal (const char* signal);
 		//вставка сигнала в момент времени time

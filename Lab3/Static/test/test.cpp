@@ -12,6 +12,11 @@ TEST(Constructor, PositiveInput) {
 	EXPECT_EQ(b.GetSizeNow(), Binary_Signal::SIZE);
 	Binary_Signal::Binary_Signal c("1502140417");
 	EXPECT_EQ(c.GetSizeNow(), 5);
+	try {
+		Binary_Signal::Binary_Signal test1("vgqhbwnj325");
+	} catch (std::invalid_argument) {
+		std::cout << "Bad string" << std::endl;
+	}
 }
 
 
@@ -22,6 +27,8 @@ TEST(Setters, Input) {
 	/*****************************/
 	//SetSignal (const char* signal)
 	/*****************************/
+	Binary_Signal::Binary_Signal test2;
+	EXPECT_THROW(test2.SetSignal("45r6tgyhuijokfh9238hg9tgegv9w9e"), std::invalid_argument);
 	Binary_Signal::Binary_Signal b;
 	b.SetSignal("1202");
 	Binary_Signal::Binary_Signal c("1202");
