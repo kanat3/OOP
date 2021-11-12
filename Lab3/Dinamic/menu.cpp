@@ -4,7 +4,7 @@
 #include "binary_signal.h"
 
 namespace Menu {
-/*
+
 	void PrintChoises (void) {
 		std::cout << "=============This is lab for Binary Signal functions=============" << std::endl;
 		std::cout << "0. Exit" << std::endl;
@@ -128,12 +128,12 @@ namespace Menu {
 			}
 			if (format_input == 3) {
 				puts("Generation.....");
-				a.Test_Class();
+				a.SetSignal(Binary_Signal::STANDART_SIGNAL);
 				puts("Ok");
 			}
 		} else if (choice == 2) {
 			Binary_Signal::Binary_Signal b;
-			b.Test_Class();
+			b.SetSignal(Binary_Signal::STANDART_SIGNAL);
 			std::cout << "Test signal:" << std::endl;
 			b.ShowClassAsString();
 			int ERROR;
@@ -190,7 +190,7 @@ namespace Menu {
 			} else if (format_input == 3) {
 				Binary_Signal::Binary_Signal c;
 				puts("Generation........");
-				c.Test_Class();
+				c.SetSignal(Binary_Signal::STANDART_SIGNAL);
 				Binary_Signal::Binary_Signal b(c);
 				std::cout << "Your temporary object:" << std::endl;
 				b.ShowClassAsString();
@@ -205,7 +205,7 @@ namespace Menu {
 				}
 				Binary_Signal::Binary_Signal c;
 				puts("Generation........");
-				c.Test_Class();
+				c.SetSignal(Binary_Signal::STANDART_SIGNAL);
 				Binary_Signal::Binary_Signal b(c);
 				std::cout << "Your temporary object:" << std::endl;
 				b.ShowClassAsString();
@@ -234,5 +234,4 @@ namespace Menu {
 		}
 		return GOOD;
 	}
-*/
 }

@@ -4,6 +4,7 @@
 namespace Binary_Signal {
 	static const int MAX_DURATION = 9; // can be 1 - 9
 	static const int STANDART_SIZE = 10;
+	static const char* STANDART_SIGNAL = "1203140315";
 
 	typedef struct Signal_Parameter {
 		int level; // 0 or 1
@@ -18,15 +19,13 @@ namespace Binary_Signal {
 		int SetRealSize (const int size) const;
 		int CheckAString (const char* signal) const;
 	public:
-		Binary_Signal (void);
-		Binary_Signal (const int bin_level = 0, const char duration = 49, const int size = STANDART_SIZE);
+		Binary_Signal (void) { REAL_SIZE = 0; };
+		Binary_Signal (const int bin_level, const char duration = 49, const int size = STANDART_SIZE);
 		explicit Binary_Signal (const char* signal); // string 180214 1 - lvl, 8 - duration
 		Binary_Signal (const Binary_Signal& a); //копирование сигнала
 		Binary_Signal (const Binary_Signal& a, const int N); //копирование сигнала n раз
 		int GetSizeNow (void) const { return REAL_SIZE; };
 		int GetFullSignalDuration (void) const;
-		Binary_Signal GetBinarySignal (void);
-		Signal_Parameter GetSignal (int index) const;
 		Signal_Parameter GetSignal (int bin_level, const char str) const;
 		void SetSignal (const int bin_level = 0, const char signal_duration = 49);
 		void SetSignal (const char* signal);
@@ -39,5 +38,12 @@ namespace Binary_Signal {
 		std::ostream& print(std::ostream&) const; //2 вывода
 		void FreeClass (void);
 		~Binary_Signal (void);
+
+		friend std::istream& operator >> (std::istream& in, Binary_Signal& a);
+		friend std::ostream& operator << (std::ostream& out, const Binary_Signal& a);
+		friend Binary_Signal operator + (const Binary_Signal& signal1, const Binary_Signal& signal2);
+		Binary_Signal& operator ~ (void);
+		friend bool operator == (const Binary_Signal& signal1, const Binary_Signal& signal2);
+		Binary_Signal& operator = (const Binary_Signal& a);
 	};
 }
