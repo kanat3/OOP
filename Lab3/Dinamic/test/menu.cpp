@@ -110,8 +110,6 @@ namespace Menu {
 					a.SetSignal(str.c_str());
 				} catch (std::bad_alloc) {
 					return EXCEPTION;
-				} catch (std::invalid_argument) {
-					return EXCEPTION;
 				}
 			}
 			if (format_input == 2) {
@@ -144,8 +142,6 @@ namespace Menu {
 					a.SetSignal(Binary_Signal::STANDART_SIGNAL);
 				} catch (std::bad_alloc) {
 					return EXCEPTION;
-				} catch (std::invalid_argument) {
-					return EXCEPTION;
 				}
 				puts("Ok");
 			}
@@ -154,8 +150,6 @@ namespace Menu {
 			try {
 				b.SetSignal(Binary_Signal::STANDART_SIGNAL);
 			} catch (std::bad_alloc) {
-				return EXCEPTION;
-			} catch (std::invalid_argument) {
 				return EXCEPTION;
 			}
 			std::cout << "Test signal:" << std::endl;
@@ -221,8 +215,6 @@ namespace Menu {
 					c.SetSignal(Binary_Signal::STANDART_SIGNAL);
 				} catch (std::bad_alloc) {
 					return EXCEPTION;
-				} catch (std::invalid_argument) {
-					return EXCEPTION;
 				}
 				Binary_Signal::Binary_Signal b;
 				try {
@@ -246,8 +238,6 @@ namespace Menu {
 				try {
 					c.SetSignal(Binary_Signal::STANDART_SIGNAL);
 				} catch (std::bad_alloc) {
-					return EXCEPTION;
-				} catch (std::invalid_argument) {
 					return EXCEPTION;
 				}
 				try {
