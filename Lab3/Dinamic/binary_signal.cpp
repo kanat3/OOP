@@ -6,7 +6,11 @@
 
 namespace Binary_Signal {
 
-	void Binary_Signal::ShowClassAsTable (void) const {
+	void Binary_Signal::ShowClassAsTable (void) const noexcept {
+		if (REAL_SIZE == 0) {
+			std::cout << "Your class is empty" << std::endl;
+			return;
+		}
 		Signal_Parameter* head = signals;
 		while (head != nullptr) {
 			std::cout << "level: " << head->level << " duration: " << head->duration << std::endl;
@@ -16,7 +20,11 @@ namespace Binary_Signal {
 		std::cout << std::endl;
 	}
 
-	void Binary_Signal::ShowClassAsString (void) const { 
+	void Binary_Signal::ShowClassAsString (void) const noexcept { 
+		if (REAL_SIZE == 0) {
+			std::cout << "Your class is empty" << std::endl;
+			return;
+		}
 		Signal_Parameter* head = signals;
 		std::cout << std::endl;
 		while (head != nullptr) {
@@ -29,7 +37,7 @@ namespace Binary_Signal {
 		std::cout << std::endl;
 	}
 
-	int Binary_Signal::CheckAString (const char* string) const { 
+	int Binary_Signal::CheckAString (const char* string) const noexcept { 
 		int len = strlen(string);
 		int error = 0;
 		int i = 0;
@@ -108,10 +116,9 @@ namespace Binary_Signal {
 	}
 
 	Binary_Signal::Binary_Signal (const int bin_level, const char duration, const int size) { //*
-		if (bin_level != 0 || bin_level != 1) {
+		if (bin_level != 0 && bin_level != 1) {
 			return;
 		}
-		REAL_SIZE = 1;
 		int BAD_ALLOC = 0;
 		Signal_Parameter* head;
 		try {
@@ -148,11 +155,12 @@ namespace Binary_Signal {
 			if (BAD_ALLOC == 0) {
 				signals->next = nullptr;
 				signals = head;
+				REAL_SIZE = size;
 			}
 		}
 	}
 
-	void Binary_Signal::SignalInversion (void) {
+	void Binary_Signal::SignalInversion (void) noexcept {
 		if (REAL_SIZE == 0) {
 			return;
 		}
@@ -168,15 +176,8 @@ namespace Binary_Signal {
 		signals = head;
 	}
 
-	Binary_Signal::~Binary_Signal (void) {
-		Signal_Parameter* to_delete;
-		while (signals) {
-			to_delete = signals;
-			signals = signals->next;
-			delete to_delete;
-		}
-		signals = nullptr;
-		REAL_SIZE = 0;
+	Binary_Signal::~Binary_Signal (void) noexcept {
+		FreeClass();
 	}
 
 	void Binary_Signal::SetSignal (const int bin_level, const char signal_duration) {
@@ -258,7 +259,7 @@ namespace Binary_Signal {
 		}
 	}
 
-	void Binary_Signal::FreeClass (void) {
+	void Binary_Signal::FreeClass (void) noexcept {
 		if (REAL_SIZE == 0) {
 			return;
 		}
@@ -320,6 +321,9 @@ namespace Binary_Signal {
 	}
 
 	Binary_Signal::Binary_Signal (const Binary_Signal& a, const int N) {
+		if (a.GetSizeNow() == 0) {
+			return;
+		}
 		REAL_SIZE = N * a.REAL_SIZE;
 		int BAD_ALLOC = 0;
 		Signal_Parameter* head;
@@ -369,7 +373,11 @@ namespace Binary_Signal {
 
 	void Binary_Signal::SetSignalInTime (const int time, const Binary_Signal& to_add) {
 		if (to_add.REAL_SIZE == 0 || time < 0) {
-			throw std::invalid_argument("Invalid argument time or nothing to add");
+			std::cout << "Invalid argument time or nothing to add" << std::endl;
+			return;
+		}
+		if (REAL_SIZE == 0) {
+			std::cout << "Your signal is empty" << std::endl;
 			return;
 		}
 		int BAD_ALLOC = 0;
@@ -422,7 +430,10 @@ namespace Binary_Signal {
 		REAL_SIZE = REAL_SIZE - sum_of_del + to_add.REAL_SIZE;
 	}
 
-	int Binary_Signal::GetFullSignalDuration (void) const {
+	int Binary_Signal::GetFullSignalDuration (void) const noexcept {
+		if (REAL_SIZE == 0) {
+			return 0;
+		}
 		int sum = 0;
 		Signal_Parameter* head = signals;
 		for (int i = 0; i < REAL_SIZE; i++) {
@@ -432,9 +443,12 @@ namespace Binary_Signal {
 		return sum;
 	}
 
-	void Binary_Signal::DeleteSignal (const int time, const char signal_duration) { //не то вроде удаляет
+	void Binary_Signal::DeleteSignal (const int time, const char signal_duration) {
+		if (REAL_SIZE == 0) {
+			return;
+		}
 		if (time <= 0) {
-			throw std::invalid_argument("Invalid argument time");
+			std::cout << ("Invalid argument time") << std::endl;
 			return;
 		}
 		int sum = 0;
@@ -447,21 +461,34 @@ namespace Binary_Signal {
 			head = head->next;
 			steps++;
 		}
+		if (head->next == nullptr) {
+			sum += head->duration -'0';
+			steps++;
+		}
 		if (sum < time) {
 			std::cout << "No such signal" << std::endl;
 			return;
 		}
-		if (head->duration == signal_duration) {
-			to_connection_1 = signals;
-			for (int i = 0; i < steps - 2; i++) {
-				to_connection_1 = to_connection_1->next;
-			}
+		to_connection_1 = signals;
+		for (int i = 0; i < steps - 2; i++) {
+			to_connection_1 = to_connection_1->next;
+		}
+		if (steps == 1) {
+			head = to_connection_1;
+		} else {
 			head = to_connection_1->next;
-			to_connection_2 = head->next;
-			to_connection_1->next = to_connection_2;
-			delete head;
-			REAL_SIZE--;
-
+		}
+		if (head->duration == signal_duration) {
+			if (steps == 1) {
+				signals = head->next;
+				delete head;
+				REAL_SIZE--;
+			} else {
+				to_connection_2 = head->next;
+				to_connection_1->next = to_connection_2;
+				delete head;
+				REAL_SIZE--;
+			}
 		} else {
 			std::cout << "No such signal" << std::endl;
 			return;			
@@ -474,7 +501,7 @@ namespace Binary_Signal {
 		return *this;
 	}
 
-	std::ostream& Binary_Signal::print (std::ostream &s) const {
+	std::ostream& Binary_Signal::print (std::ostream &s) const noexcept {
 		puts("\n===========================First print===========================\n");
 		ShowClassAsString();
 		puts("\n===========================Second print===========================\n");
@@ -499,7 +526,7 @@ namespace Binary_Signal {
 			return in;
 	}
 
-	std::ostream& operator << (std::ostream& out, const Binary_Signal& a) {
+	std::ostream& operator << (std::ostream& out, const Binary_Signal& a) noexcept {
 		a.print(out);
 		return out;
 	}
@@ -510,12 +537,12 @@ namespace Binary_Signal {
 		return b;
 	}
 
-	Binary_Signal& Binary_Signal::operator ~ (void) {
+	Binary_Signal& Binary_Signal::operator ~ (void) noexcept {
 		SignalInversion();
 		return *this;
 	}
 
-	bool operator == (const Binary_Signal& signal1, const Binary_Signal& signal2) {
+	bool operator == (const Binary_Signal& signal1, const Binary_Signal& signal2) noexcept {
 		if (signal1.GetSizeNow() != signal2.GetSizeNow()) {
 			return false;
 		}
@@ -536,7 +563,8 @@ namespace Binary_Signal {
 
 	Binary_Signal& Binary_Signal::operator = (const Binary_Signal& a) {
 		REAL_SIZE = a.GetSizeNow();
-		if (REAL_SIZE == 0) {
+		if (a.GetSizeNow() == 0) {
+			puts("here");
 			return *this;
 		}
 		int BAD_ALLOC = 0;

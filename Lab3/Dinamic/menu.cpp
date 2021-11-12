@@ -108,14 +108,18 @@ namespace Menu {
 				}
 				try {
 					a.SetSignal(str.c_str());
-				} catch (std::invalid_argument) {
-					std::cout << "Exception: Invalid value" << std::endl;
+				} catch (std::bad_alloc) {
 					return EXCEPTION;
 				}
 			}
 			if (format_input == 2) {
 				int level;
 				char duration;
+				int size;
+				std::cout << "Enter size of binary signal: ";
+				if (!GetInput(size, ERROR)) {
+					return INPUT_ERROR;
+				}
 				std::cout << "Enter level: ";
 				if (!GetInput(level, ERROR)) {
 					return INPUT_ERROR;
@@ -124,16 +128,30 @@ namespace Menu {
 				if (!GetInput(duration, ERROR)) {
 					return INPUT_ERROR;
 				}
-				a.SetSignal(level, duration);
+				try {
+					Binary_Signal::Binary_Signal k(level, duration, size);
+					a = k;
+					k.FreeClass();
+				} catch (std::bad_alloc) {
+					return EXCEPTION;
+				}
 			}
 			if (format_input == 3) {
 				puts("Generation.....");
-				a.SetSignal(Binary_Signal::STANDART_SIGNAL);
+				try {
+					a.SetSignal(Binary_Signal::STANDART_SIGNAL);
+				} catch (std::bad_alloc) {
+					return EXCEPTION;
+				}
 				puts("Ok");
 			}
 		} else if (choice == 2) {
 			Binary_Signal::Binary_Signal b;
-			b.SetSignal(Binary_Signal::STANDART_SIGNAL);
+			try {
+				b.SetSignal(Binary_Signal::STANDART_SIGNAL);
+			} catch (std::bad_alloc) {
+				return EXCEPTION;
+			}
 			std::cout << "Test signal:" << std::endl;
 			b.ShowClassAsString();
 			int ERROR;
@@ -144,8 +162,7 @@ namespace Menu {
 			}
 			try {
 				a.SetSignalInTime(time, b);
-			} catch (std::invalid_argument) {
-				std::cout << "Exception: Invalid value" << std::endl;
+			} catch (std::bad_alloc) {
 				return EXCEPTION;
 			}
 			std::cout << "Your first signal now:" << std::endl;
@@ -167,7 +184,12 @@ namespace Menu {
 				return INPUT_ERROR;
 			}
 			if (format_input == 1) {
-				Binary_Signal::Binary_Signal b(a);
+				Binary_Signal::Binary_Signal b;
+				try {
+					b = a;
+				} catch (std::bad_alloc) {
+					return EXCEPTION;
+				}
 				puts("Your temporary object:");
 				b.ShowClassAsString();
 			} else if (format_input == 2) {
@@ -183,15 +205,23 @@ namespace Menu {
 					Binary_Signal::Binary_Signal b(a, N);
 					puts("Your temporary object:");
 					b.ShowClassAsString();
-				} catch (std::invalid_argument) {
-					std::cout << "Exception: Invalid value" << std::endl;
+				} catch (std::bad_alloc) {
 					return EXCEPTION;
 				}
 			} else if (format_input == 3) {
 				Binary_Signal::Binary_Signal c;
 				puts("Generation........");
-				c.SetSignal(Binary_Signal::STANDART_SIGNAL);
-				Binary_Signal::Binary_Signal b(c);
+				try {
+					c.SetSignal(Binary_Signal::STANDART_SIGNAL);
+				} catch (std::bad_alloc) {
+					return EXCEPTION;
+				}
+				Binary_Signal::Binary_Signal b;
+				try {
+					b = c;
+				} catch (std::bad_alloc) {
+					return EXCEPTION;
+				}
 				std::cout << "Your temporary object:" << std::endl;
 				b.ShowClassAsString();
 			} else if (format_input == 4) {
@@ -205,10 +235,18 @@ namespace Menu {
 				}
 				Binary_Signal::Binary_Signal c;
 				puts("Generation........");
-				c.SetSignal(Binary_Signal::STANDART_SIGNAL);
-				Binary_Signal::Binary_Signal b(c);
-				std::cout << "Your temporary object:" << std::endl;
-				b.ShowClassAsString();
+				try {
+					c.SetSignal(Binary_Signal::STANDART_SIGNAL);
+				} catch (std::bad_alloc) {
+					return EXCEPTION;
+				}
+				try {
+					Binary_Signal::Binary_Signal b(c, N);
+					std::cout << "Your temporary object:" << std::endl;
+					b.ShowClassAsString();
+				} catch (std::bad_alloc) {
+					return EXCEPTION;
+				}
 			}
 		} else if (choice == 5) {
 			int ERROR;
@@ -223,7 +261,11 @@ namespace Menu {
 				return INPUT_ERROR;
 			}
 			puts("Trying to delete.....");
-			a.DeleteSignal(time, str);
+			try {
+				a.DeleteSignal(time, str);
+			} catch (std::bad_alloc) {
+				return EXCEPTION;
+			}
 			puts("Result\n");
 			a.ShowClassAsString();
 		} else if (choice == 6) {
