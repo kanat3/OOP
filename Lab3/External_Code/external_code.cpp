@@ -172,10 +172,11 @@ void dialog (void) {
     puts("======== This program implements the Sutherland - Hodgman algorithm ========");
     puts("Enter the polygon. For example (100,150), (200,250), (300,200)");
     int poly_size;
+    puts("Enter the count of vertix:");
     getEl(poly_size, std::cin);
     vector::vec poly_array(COORD_SYSTEM*poly_size, 0);
     for (int i = 0; i < poly_size*COORD_SYSTEM; i += 2) {
-        std::cout << std::endl << "Enter x: ";
+        std::cout << "Enter x: ";
         getEl(poly_array[i], std::cin);
         std::cout << "Enter y: ";
         getEl(poly_array[i + 1], std::cin);
@@ -183,10 +184,11 @@ void dialog (void) {
     }
     puts("Enter the clipping area. For example (150,150), (150,200), (200,200), (200,150)");
     int clipper_size;
+    puts("Enter the count of vertix:");
     getEl(clipper_size, std::cin);
     vector::vec clipper_array(COORD_SYSTEM*clipper_size, 0);
     for (int i = 0; i < clipper_size*COORD_SYSTEM; i += 2) {
-        std::cout << std::endl << "Enter x: ";
+        std::cout << "Enter x: ";
         getEl(clipper_array[i], std::cin);
         std::cout << "Enter y: ";
         getEl(clipper_array[i + 1], std::cin);
