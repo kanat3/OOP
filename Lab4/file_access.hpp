@@ -6,7 +6,6 @@
 #include <string>
 
 class FileAccess {
-
 public:
 	// Opens the file.
 	FileAccess(int argc, char *argv[]);

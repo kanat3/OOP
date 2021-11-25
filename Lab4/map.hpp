@@ -1,7 +1,6 @@
-//Table class
 #pragma once
 #include <map>
-#include <any>
+#include "operands.hpp"
 #include <string>
 
 class Table {
@@ -10,17 +9,11 @@ public:
 	Table() {};
 	~Table() {};
 
-	// Add a new symbol to the symbol table.
-	void AddSymbol(std::string &a_symbol, int a_loc);
-	// Display the symbol table.
-	void DisplaySymbolTable() const;
-	// Lookup a symbol in the symbol table.
-	bool LookupSymbol(const std::string &a_symbol, int &a_loc);
-    // Find symbol by address
-    std::any FindSymbol (const std::string& address) const;
-    // Delete symbol by address
+	void AddSymbol(const int a_loc, Operator_Container* a_operator);
+	void PrintTable(void) const;
+    Operator_Container FindSymbol (const std::string& address) const;
     void DeleteSymbol (const std::string& address);
+	
 private:
-	// Mb not using map?
-	std::map<std::string, std::any> m_Table;
+	std::map<int, Operator_Container*> m_Table;
 };

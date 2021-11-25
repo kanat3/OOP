@@ -26,43 +26,8 @@ private:
 	// Derived values
 	InstructionType m_Type; // The type of instruction
     OperandType m_OpType;
-	bool m_IsNumericOperand;// == true if the operand is numeric
 	void clearValues();
 public:
 	Instruction();
 	~Instruction() {};
-
-	// Parse the Instruction
-	InstructionType ParseInstruction(std::string &a_buff);
-	// Compute the location of the next instruction
-	int LocationNextInstruction(int a_loc);
-	// To access the label
-	inline std::string &GetLabel() {
-		return m_Label;
-	};
-	// To determine if a label is blank
-	inline bool isLabel() {
-		return !m_Label.empty();
-	};
-	inline std::string &GetInstruction() {
-		return m_instruction;
-	}
-	inline std::string getOperand() {
-		return m_Operand;
-	}
-	inline bool isNumericOperand() {
-		return m_IsNumericOperand;
-	}
-	inline std::string getOpCode() {
-		return m_OpCode;
-	}
-	inline void setOpCode(std::string str) {
-		m_OpCode = str;
-	}
-	inline void setLabel(std::string str) {
-		m_Label = str;
-	}
-	inline void setOperand(std::string str) {
-		m_Operand = str;
-	}
 };

@@ -1,49 +1,53 @@
 #pragma once
 #include <string>
 
-class Operand_Register {
+class Operator_Container {
 protected:
-    std::string m_ORLabel; // label
-    bool m_IsLabel; // is label
-    std::string m_ORCode; // The numerical value of the op code
-    short int m_ORRegister1; // The numerical value of the op register
-    short int m_ORRegister2; // The numerical value of the op register
+    std::string m_Label; // label
+    std::string m_Code; // The numerical value of the op code
 public:
-    virtual const DisplayInfo (void);
-    std::string RegisterValue (int n); // first or second ?
-    Operand_Register& SetORRegister (const std::string& a, int n); // 1 or 2
-}
+    std::string GetLabel (void) const { return m_Label; };
+    std::string GetCode (void) const { return m_Code; };
+};
 
-class Operand_RegisterMemory : public Operand_Register {
+class Operator_Register : public Operator_Container {
+protected:
+    short int m_LRegister; // The numerical value of the op register
+    short int m_HRegister; // The numerical value of the op register
+public:
+    ~Operator_Register() { return; };
+
+    friend std::istream& operator >> (std::istream& in, Operator_Register& a);
+    friend std::ostream& operator << (std::ostream& out, Operator_Register& a);
+};
+
+class Operator_RegisterMemory : public Operator_Container {
 private:
     std::string m_MemoryId;
+    std::string m_Register;
 public:
-    virtual const DisplayInfo (void);  
-    std::string GetOPMRegister (void) const { return m_ORRegister1; };
-    void SetOPMRegister (const std::string& a);
-    std::string GetOPM_MemoryId (void) const { return m_MemoryId; };
-    void SetOPM_MemoryId (const std::string& a);
-}
+    ~Operator_RegisterMemory () { return; };
 
-class Operand_Transition {
+    friend std::istream& operator >> (std::istream& in, Operator_RegisterMemory& a);
+    friend std::ostream& operator << (std::ostream& out, Operator_RegisterMemory& a);
+};
+
+class Operator_Transition : public Operator_Container {
 private:
-    std::string m_OTCode; // The numerical value of the op code
     std::string m_TranslLabel; // id of transition label
 public:
-    void DisplayInfo (void) const;
-    std::string GetTranslLabel (void) const { return m_TranslLabel; };
-    void SetTranslLabel (const std::string& a);
-}
+    ~Operator_Transition () { return; };
 
-class Operand_Typedef {
+    friend std::istream& operator >> (std::istream& in, Operator_Transition& a);
+    friend std::ostream& operator << (std::ostream& out, Operator_Transition& a);
+};
+
+class Operator_Typedef : public Operator_Container {
 private:
-    std::string m_ORLabel; // must be
-    std::string m_Type; // type of data
-    std::string m_OTypeCode; // code of operator
-    std::string m_Operand; // string or integer
-    bool m_IsInt; // is m_Operand int
+    std::string m_Operand; // must be
 public:
-    void DisplayInfo (void) const;
-    std::string GetORLabel (void) const { return m_ORLabel; };
-    void SetORLabel (const std::string& a);
-}
+    ~Operator_Typedef () { return; };
+
+    friend std::istream& operator >> (std::istream& in, Operator_Typedef& a);
+    friend std::ostream& operator << (std::ostream& out, Operator_Typedef& a);
+};
