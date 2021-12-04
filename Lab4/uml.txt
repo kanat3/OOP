@@ -6,28 +6,32 @@
 [Assembler]<>->[FileAccess]
 [Assembler]<>->[Table]
 
-[Assembler|-m_facc: FileAccess;-m_symtab: Table;]
+[Assembler|-m_facc: FileAccess;-m_symtab: Table; +MAX_MEMORY: const static int | Assembler(int argc
+char **argv); void DisplayInfo (void) const ; std::string ParseInstruction(std::string& my_str); void WriteInstruction (void); void CreateOperands (const std::string info
+const std::string line
+const std::string label
+int& adr)]
 
-[Operator_Container| #m_Label:string; #m_Code:string]
+[Operator_Container| #m_Label:string; #m_Code:string | std::string GetLabel (void) const;std::string GetCode (void) const;void SetLabel (const std::string Label);void SetCode (const std::string Code);virtual const std::string getTypeofClass (void)]
 
 [Operator_Container]^[Operator_RegisterMemory]
 [Operator_Container]^[Operator_Register]
 [Operator_Container]^[Operator_Transition]
 [Operator_Container]^[Operator_Typedef]
 
-[Operator_Register|-m_LRegister:short int; m_LRegister:short int]
+[Operator_Register|-m_LRegister:short int; m_LRegister:short int |friend std::istream& operator .. (std::istream& in, Operator_Register& a);friend std::ostream& operator .. (std::ostream& out, Operator_Register& a);void SetLR (const short int L_Reg) ;void SetHR (const short int H_Reg);short int GetLR (void) const;short int GetHR (void) const;virtual const std::string getTypeofClass (void);]
 
 [Operator_RegisterMemory]
-[Operator_RegisterMemory| -m_MemoryId:string; -m_Register:string]
+[Operator_RegisterMemory| -m_MemoryId:string; -m_Register:short int ; +MEMORY_TYPE:enum | friend std::istream& operator .. (std::istream& in, Operator_RegisterMemory& a) ; friend std::ostream& operator .. (std::ostream& out, Operator_RegisterMemory& a); void SetMemoryID (const std::string ID); void SetRegister (const short int Register); std::string GetMemoryID (void) const; short int GetRegister (void) const; virtual const std::string getTypeofClass (void);]
 
 [Operator_Transition]
-[Operator_Transition| -m_TranslLabel:string]
+[Operator_Transition| -m_TranslLabel:string |    friend std::istream& operator .. (std::istream& in, Operator_Transition& a);friend std::ostream& operator .. (std::ostream& out, Operator_Transition& a);void SetTransLabel (const std::string TLabel);std::string GetTransLabel (void) const;virtual const std::string getTypeofClass (void);]
 
 [Operator_Typedef]
-[Operator_Typedef| -m_Operand:string]
+[Operator_Typedef| -m_Operand:string; +DATA_TYPE:enum|friend std::istream& operator ..(std::istream& in, Operator_Typedef& a);friend std::ostream& operator .. (std::ostream& out, Operator_Typedef& a);std::string GetOperand (void) const;void SetOperand (const std::string Operand);virtual const std::string getTypeofClass (void);]
 
 [FileAccess]
-[FileAccess| -m_sfile:ifstream]
+[FileAccess| -m_sfile:ifstream | FileAccess (int argc, char **argv) ; ~FileAccess (void) ; bool GetNextLine(std::string &a_buff) ; void rewind()]
 
 [Table]
-[Table|-m_Table:map]
+[Table|-m_Table:map | Table(); ~Table(); void AddSymbol(const int a_loc, Operator_Container* a_operator); void PrintTable(void) const; Operator_Container& FindSymbol (const int address) const; void DeleteSymbol (const int address)]

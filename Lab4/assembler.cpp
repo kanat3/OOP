@@ -50,6 +50,7 @@ void Assembler::CreateOperands (const std::string info, const std::string line, 
         }
         adr += 109;
         m_symtab.AddSymbol(adr, a);
+        std::cout << "Operands information: " << *a << std::endl;
     }
     if (info == "Operator_RegisterMemory") {
         Operator_RegisterMemory* b = new Operator_RegisterMemory;
@@ -76,6 +77,7 @@ void Assembler::CreateOperands (const std::string info, const std::string line, 
         }
         adr += 57;
         m_symtab.AddSymbol(adr, b);
+        std::cout << "Operands information: " << *b << std::endl;
     }
     if (info == "Operator_Transition") {
         Operator_Transition* c = new Operator_Transition;
@@ -96,6 +98,7 @@ void Assembler::CreateOperands (const std::string info, const std::string line, 
         }
         adr += 39;
         m_symtab.AddSymbol(adr, c);
+        std::cout << "Operands information: " << *c << std::endl;
     }
     if (info == "Operator_Typedef") {
         Operator_Typedef* d = new Operator_Typedef;
@@ -124,6 +127,7 @@ void Assembler::CreateOperands (const std::string info, const std::string line, 
         }
         adr += 44;
         m_symtab.AddSymbol(adr, d);
+        std::cout << "Operands information: " << *d << std::endl;
     }
 }
 
