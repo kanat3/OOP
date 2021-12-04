@@ -1,0 +1,8 @@
+                    ;this is first comment
+#FIRST_METKA
+add 14 5
+memory_operand 12 %DATA_SEGMENT ; memory operand
+;comment wooow
+jump #FIRST_METKA
+:m_INT typedef_int 500
+;end of programm

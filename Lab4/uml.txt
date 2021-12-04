@@ -1,0 +1,33 @@
+// Cool Class Diagram
+// ------------------
+
+// Chain elements like this
+
+[Assembler]<>->[FileAccess]
+[Assembler]<>->[Table]
+
+[Assembler|-m_facc: FileAccess;-m_symtab: Table;]
+
+[Operator_Container| #m_Label:string; #m_Code:string]
+
+[Operator_Container]^[Operator_RegisterMemory]
+[Operator_Container]^[Operator_Register]
+[Operator_Container]^[Operator_Transition]
+[Operator_Container]^[Operator_Typedef]
+
+[Operator_Register|-m_LRegister:short int; m_LRegister:short int]
+
+[Operator_RegisterMemory]
+[Operator_RegisterMemory| -m_MemoryId:string; -m_Register:string]
+
+[Operator_Transition]
+[Operator_Transition| -m_TranslLabel:string]
+
+[Operator_Typedef]
+[Operator_Typedef| -m_Operand:string]
+
+[FileAccess]
+[FileAccess| -m_sfile:ifstream]
+
+[Table]
+[Table|-m_Table:map]

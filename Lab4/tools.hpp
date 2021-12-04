@@ -7,7 +7,7 @@
 template <typename T>
 void getInput (T &x, std::istream &in = std::cin, std::ostream &err= std::cerr){
     bool valid;
-    do{
+    do {
         try{
             in >> x;
             valid = in.good();
@@ -27,5 +27,5 @@ void getInput (T &x, std::istream &in = std::cin, std::ostream &err= std::cerr){
             in.clear();
             in.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
         }
-    }while(!valid);
+    } while(!valid);
 }

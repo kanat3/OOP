@@ -11,8 +11,8 @@ public:
 
 	void AddSymbol(const int a_loc, Operator_Container* a_operator);
 	void PrintTable(void) const;
-    Operator_Container FindSymbol (const std::string& address) const;
-    void DeleteSymbol (const std::string& address);
+    Operator_Container& FindSymbol (const int address) const;
+    void DeleteSymbol (const int address);
 	
 private:
 	std::map<int, Operator_Container*> m_Table;

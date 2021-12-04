@@ -2,8 +2,20 @@
 #include "tools.hpp"
 
 std::istream& operator >> (std::istream& in, Operator_Register& a) {
-    std::cout << "Enter the label: " << std::endl;
-    getInput(a.m_Label);
+    std::cout << "Do you want to enter a label? y/n: ";
+    std::string answer = "";
+    while (1) {
+        getInput(answer);
+        if (answer == "y" || answer == "n") {
+            break;
+        }
+    }
+    if (answer == "y") {
+        std::cout << "Enter the label of <register operator>: " << std::endl;
+        getInput(a.m_Label);
+    } else {
+        a.m_Label = "";
+    }
     std::cout << "Enter the code of operation: " << std::endl;
     getInput(a.m_Code);
     std::cout << "Enter the L register: " << std::endl;
@@ -14,15 +26,27 @@ std::istream& operator >> (std::istream& in, Operator_Register& a) {
 }
 
 std::ostream& operator << (std::ostream& out, Operator_Register& a) {
-    std::cout << "Your register operand: " << std::endl;
+    std::cout << std::endl << "This is register operand: " << std::endl;
     std::cout << a.m_Label << std::endl << a.m_Code << std::endl
                 << a.m_LRegister << std::endl << a.m_HRegister << std::endl;
     return out;
 }
 
 std::istream& operator >> (std::istream& in, Operator_RegisterMemory& a) {
-    std::cout << "Enter the label: " << std::endl;
-    getInput(a.m_Label);
+    std::cout << "Do you want to enter a label? y/n: ";
+    std::string answer = "";
+    while (1) {
+        getInput(answer);
+        if (answer == "y" || answer == "n") {
+            break;
+        }
+    }
+    if (answer == "y") {
+        std::cout << "Enter the label of <register memory operator>: " << std::endl;
+        getInput(a.m_Label);
+    } else {
+        a.m_Label = "";
+    }
     std::cout << "Enter the code of operation: " << std::endl;
     getInput(a.m_Code);
     std::cout << "Enter the register: " << std::endl;
@@ -33,7 +57,7 @@ std::istream& operator >> (std::istream& in, Operator_RegisterMemory& a) {
 }
 
 std::ostream& operator << (std::ostream& out, Operator_RegisterMemory& a) {
-    std::cout << "Your memory register operand: " << std::endl;
+    std::cout << std::endl << "This is memory register operand: " << std::endl;
     std::cout << a.m_Label << std::endl << a.m_Code << std::endl
                 << a.m_Register << std::endl
                         << a.m_MemoryId << std::endl;
@@ -41,23 +65,35 @@ std::ostream& operator << (std::ostream& out, Operator_RegisterMemory& a) {
 }
 
 std::istream& operator >> (std::istream& in, Operator_Transition& a) {
-    std::cout << "Enter the code of operation: " << std::endl;
+    std::cout << "Enter the code of operation of <transition operator>: " << std::endl;
     getInput(a.m_Code);
     std::cout << "Enter the transition label: " << std::endl;
-    getInput(a.m_TranslLabel);
+    getInput(a.m_TransLabel);
     return in;  
 }
 
 std::ostream& operator << (std::ostream& out, Operator_Transition& a) {
-    std::cout << "Your transition operand: " << std::endl;
+    std::cout << std::endl << "This is transition operand: " << std::endl;
     std::cout << a.m_Code << std::endl
-                << a.m_TranslLabel << std::endl;
+                << a.m_TransLabel << std::endl;
     return out;    
 }
 
 std::istream& operator >> (std::istream& in, Operator_Typedef& a) {
-    std::cout << "Enter the label: " << std::endl;
-    getInput(a.m_Label);
+    std::cout << "Do you want to enter a label? y/n: ";
+    std::string answer = "";
+    while (1) {
+        getInput(answer);
+        if (answer == "y" || answer == "n") {
+            break;
+        }
+    }
+    if (answer == "y") {
+        std::cout << "Enter the label of <typedef operator>: " << std::endl;
+        getInput(a.m_Label);
+    } else {
+        a.m_Label = "";
+    }
     std::cout << "Enter the code of operation: " << std::endl;
     getInput(a.m_Code);
     std::cout << "Enter the operand: " << std::endl;
@@ -66,7 +102,7 @@ std::istream& operator >> (std::istream& in, Operator_Typedef& a) {
 }
 
 std::ostream& operator << (std::ostream& out, Operator_Typedef& a) {
-    std::cout << "Your typedef operand: " << std::endl;
+    std::cout << std::endl << "This is typedef operand: " << std::endl;
     std::cout << a.m_Label << std::endl
             << a.m_Code << std::endl
                 << a.m_Operand << std::endl;
