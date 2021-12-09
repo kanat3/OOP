@@ -6,3 +6,7 @@ memory_operand 12 %DATA_SEGMENT ; memory operand
 jump #FIRST_METKA
 :m_INT typedef_int 500
 ;end of programm
+ch 5 7
+help 88 6
+oooop 3 6
+not_jump #OMG ;help please.............
