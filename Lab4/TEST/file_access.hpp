@@ -10,7 +10,7 @@ public:
 	// Closes the file.
 	~FileAccess (void);
 	// Get the next line from the source file.
-	bool GetNextLine(std::string &a_buff);
+	bool GetNextLine(std::string& a_buff);
 	// Put the file pointer back to the beginning of the file.
 	void rewind();
 	bool isEOF (void) {

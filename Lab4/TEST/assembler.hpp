@@ -10,14 +10,13 @@ class Assembler {
 public:
 	const static int MAX_MEMORY = 1000;
 	const static int REGISTERS_COUNT = 16;
-
 	Assembler (int argc, char *argv[]) : m_facc(argc, argv) { 
 		for (int i = 0; i < REGISTERS_COUNT; i++) { m_registers.at(i) = " "; }; 
 	};
 	void DisplayInfo (void) const { m_symtab.PrintTable(); };
 	std::string ParseInstruction(std::string& my_str, const int numb_str);
 	bool WriteInstruction (void);
-	void CreateOperands (const std::string info, const std::string line, const std::string label, int& adr);
+	void CreateOperands (const std::string& info, const std::string& line, const std::string& label, int& adr);
 	void RunAssembler (void);
 	void SetRegistor (const std::string& info, const int position) { m_registers.at(position) = info; };
 	std::string GetRegister (const int position) const { return m_registers.at(position); };

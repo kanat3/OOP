@@ -21,7 +21,7 @@ FileAccess::~FileAccess() {
 }
 
 
-bool FileAccess::GetNextLine(std::string &a_buff) {
+bool FileAccess::GetNextLine(std::string& a_buff) {
 	if (m_sfile.eof()) return false;
 	getline(m_sfile, a_buff);
 	// Return indicating success.

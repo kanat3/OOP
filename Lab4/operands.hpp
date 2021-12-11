@@ -8,8 +8,8 @@ protected:
 public:
     std::string GetLabel (void) const { return m_Label; };
     std::string GetCode (void) const { return m_Code; };
-    void SetLabel (const std::string Label) { m_Label = Label; };
-    void SetCode (const std::string Code) { m_Code = Code; };
+    void SetLabel (const std::string& Label) { m_Label = Label; };
+    void SetCode (const std::string& Code) { m_Code = Code; };
     virtual const std::string getTypeofClass (void) { return "Operator_Container"; };
 };
 

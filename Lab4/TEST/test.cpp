@@ -57,24 +57,65 @@ TEST (Operands, Virtual_func) {
     EXPECT_EQ(d.getTypeofClass(), "Operator_Typedef");
 }
 
-TEST (Map, All_Func) {
+TEST (Map, Map_Func) {
     Table a;
     Operator_Container* a1 = new Operator_Container;
     a1->SetLabel("test operator #1");
-    Operator_Container* a2 = new Operator_Container;
+    Operator_RegisterMemory* a2 = new Operator_RegisterMemory;
     a2->SetLabel("test operator #2");
-    Operator_Container* a3 = new Operator_Container;
+    Operator_Register* a3 = new Operator_Register;
     a3->SetLabel("test operator #3");
-    Operator_Container* a4 = new Operator_Container;
+    Operator_Transition* a4 = new Operator_Transition;
     a4->SetLabel("test operator #4");
-    Operator_Container* a5 = new Operator_Container;
+    Operator_Typedef* a5 = new Operator_Typedef;
     a5->SetLabel("test operator #5");
     a.AddSymbol(10, a1);
     a.AddSymbol(20, a2);
     a.AddSymbol(30, a3);
     a.AddSymbol(40, a4);
     a.AddSymbol(50, a5);
-    
+    Operator_Container* op;
+    op = a.FindSymbolByAddress(30);
+    EXPECT_EQ(op->GetLabel(), a3->GetLabel());
+    op = a.FindSymbolByAddress(50);
+    EXPECT_EQ(op->GetLabel(), a5->GetLabel());
+    op = a.FindSymbolByAddress(10);
+    EXPECT_EQ(op->GetLabel(), a1->GetLabel());
+    op = a.FindSymbolByAddress(20);
+    EXPECT_EQ(op->GetLabel(), a2->GetLabel());
+    a.DeleteSymbol(40);
+    op = a.FindSymbolByAddress(40);
+    EXPECT_EQ(op, nullptr);
+}
+
+TEST (Map, Virtual_Func) {
+    Table a;
+    Operator_Container* a1 = new Operator_Container;
+    a1->SetLabel("test operator #1");
+    Operator_RegisterMemory* a2 = new Operator_RegisterMemory;
+    a2->SetLabel("test operator #2");
+    Operator_Register* a3 = new Operator_Register;
+    a3->SetLabel("test operator #3");
+    Operator_Transition* a4 = new Operator_Transition;
+    a4->SetLabel("test operator #4");
+    Operator_Typedef* a5 = new Operator_Typedef;
+    a5->SetLabel("test operator #5");
+    a.AddSymbol(10, a1);
+    a.AddSymbol(20, a2);
+    a.AddSymbol(30, a3);
+    a.AddSymbol(40, a4);
+    a.AddSymbol(50, a5);
+    Operator_Container* op;
+    op = a.FindSymbolByAddress(40);
+    EXPECT_EQ(op->getTypeofClass(), a4->getTypeofClass());
+    op = a.FindSymbolByAddress(30);
+    EXPECT_EQ(op->getTypeofClass(), a3->getTypeofClass());
+    op = a.FindSymbolByAddress(50);
+    EXPECT_EQ(op->getTypeofClass(), a5->getTypeofClass());
+    op = a.FindSymbolByAddress(10);
+    EXPECT_EQ(op->getTypeofClass(), a1->getTypeofClass());
+    op = a.FindSymbolByAddress(20);
+    EXPECT_EQ(op->getTypeofClass(), a2->getTypeofClass());
 }
 
 int main(int argc, char **argv) {

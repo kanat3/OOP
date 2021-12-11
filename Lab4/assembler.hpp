@@ -17,7 +17,7 @@ public:
 	void DisplayInfo (void) const { m_symtab.PrintTable(); };
 	std::string ParseInstruction(std::string& my_str, const int numb_str);
 	bool WriteInstruction (void);
-	void CreateOperands (const std::string info, const std::string line, const std::string label, int& adr);
+	void CreateOperands (const std::string& info, const std::string& line, const std::string& label, int& adr);
 	void RunAssembler (void);
 	void SetRegistor (const std::string& info, const int position) { m_registers.at(position) = info; };
 	std::string GetRegister (const int position) const { return m_registers.at(position); };

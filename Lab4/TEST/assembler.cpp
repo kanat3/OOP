@@ -41,7 +41,7 @@ bool Assembler::WriteInstruction (void) {
     return true;
 }
 
-void Assembler::CreateOperands (const std::string info, const std::string line, const std::string label, int& adr) {
+void Assembler::CreateOperands (const std::string& info, const std::string& line, const std::string& label, int& adr) {
     int count = 0;
     std::istringstream input(line);
     std::string ibuff;
@@ -187,7 +187,8 @@ std::string Assembler::ParseInstruction (std::string& my_str, const int numb_str
             switch(count) {
                 case 0: // CODE OF OPERATION?
                     if (ibuff.at(0) == ':') { //metka
-                        if ((ibuff == ":m_INT" || ibuff == ":m_FLOAT" || ibuff == ":m_STRING") == 0) {                            return "ERROR";
+                        if ((ibuff == ":m_INT" || ibuff == ":m_FLOAT" || ibuff == ":m_STRING") == 0) {
+                             return "ERROR";
                         }
                         return "Operator_Typedef";
                     }
