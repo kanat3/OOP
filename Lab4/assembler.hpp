@@ -11,6 +11,7 @@ public:
 	const static int MAX_MEMORY = 1000;
 	const static int REGISTERS_COUNT = 16;
 
+	Assembler (void) {};
 	Assembler (int argc, char *argv[]) : m_facc(argc, argv) { 
 		for (int i = 0; i < REGISTERS_COUNT; i++) { m_registers.at(i) = " "; }; 
 	};

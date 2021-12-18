@@ -165,7 +165,7 @@ std::string Assembler::ParseInstruction (std::string& my_str, const int numb_str
     std::istringstream input(my_str);
 	std::string ibuff;
 	input >> ibuff;
-    if (ibuff.empty()) { //empty line
+    if (ibuff.empty()) {
         return "END";
     }
     if (ibuff.at(0) == ';') { //first symbol is comment

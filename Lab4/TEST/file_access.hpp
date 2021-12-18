@@ -7,6 +7,7 @@ class FileAccess {
 public:
 	// Opens the file.
 	FileAccess (int argc, char *argv[]);
+	FileAccess (void) {};
 	// Closes the file.
 	~FileAccess (void);
 	// Get the next line from the source file.
