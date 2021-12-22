@@ -8,12 +8,9 @@ int main (int argc, char *argv[]) {
     } else {
         Assembler run(argc, argv);
         run.RunAssembler();
-        /**********************************************/
-        // cat text.txt
         std::cout << std::endl << "Original statement: " << std::endl;
         system("cat text.txt");
         std::cout << std::endl;
-        /*********************************************/
     }
     return 0;
 }

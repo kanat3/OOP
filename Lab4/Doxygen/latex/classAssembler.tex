@@ -1,0 +1,238 @@
+\hypertarget{classAssembler}{}\doxysection{Assembler Class Reference}
+\label{classAssembler}\index{Assembler@{Assembler}}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classAssembler_ac61ba65a05a9622eb90ad7aaa6306dda}{Assembler}} (void)
+\begin{DoxyCompactList}\small\item\em Construct a new \mbox{\hyperlink{classAssembler}{Assembler}} object. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classAssembler_a898ad743c2f623a3df00c6e7758513ae}{Assembler}} (int argc, char $\ast$argv\mbox{[}$\,$\mbox{]})
+\begin{DoxyCompactList}\small\item\em Construct a new \mbox{\hyperlink{classAssembler}{Assembler}} object. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classAssembler_ad3fb27ada108c1e399eb3e4a8a66d8d2}{Display\+Info}} (void) const
+\begin{DoxyCompactList}\small\item\em Output of the entire contents of the operand table. \end{DoxyCompactList}\item 
+std\+::string \mbox{\hyperlink{classAssembler_ab3bd2b658153726949d24e2dcfa13a8c}{Parse\+Instruction}} (std\+::string \&my\+\_\+str, const int numb\+\_\+str)
+\begin{DoxyCompactList}\small\item\em Parsing the line from file. In case of an error during parsing, returns the value E\+R\+R\+OR. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classAssembler_a5310e751c602344ae783730380e9260a}{Write\+Instruction}} (void)
+\begin{DoxyCompactList}\small\item\em Parsing the entire file. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classAssembler_a28c0f15a289d74bb3ba9574b0d013911}{Create\+Operands}} (const std\+::string \&info, const std\+::string \&line, const std\+::string \&label, int \&adr)
+\begin{DoxyCompactList}\small\item\em Create a Operands object. Adding to the table. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classAssembler_afdce08b19c654549258c8a8e46a37612}{Run\+Assembler}} (void)
+\begin{DoxyCompactList}\small\item\em Launching the Emulator. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classAssembler_a5553bff9785df47986c189ef6bdc0243}{Set\+Registor}} (const std\+::string \&info, const int position)
+\begin{DoxyCompactList}\small\item\em Set the Registor object. In case of errors when parsing the file, exit the program with the corresponding message. \end{DoxyCompactList}\item 
+std\+::string \mbox{\hyperlink{classAssembler_ab7d8739cfa05f83b5b635d69fd9d96e4}{Get\+Register}} (const int position) const
+\begin{DoxyCompactList}\small\item\em Get the Register object. New information in memory array. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classAssembler_a6a3d289edd3df97388d218ed7b6b8470}{Display\+Memory}} (void) const
+\begin{DoxyCompactList}\small\item\em Output of information in registers. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classAssembler_af8aae33b7a5079fd8081aa623f1011fc}{Assign\+Memory}} (const std\+::string \&info)
+\begin{DoxyCompactList}\small\item\em Filling in registers. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+const static int \mbox{\hyperlink{classAssembler_ad93d1d09c3189e5b9b2a583058b0044c}{M\+A\+X\+\_\+\+M\+E\+M\+O\+RY}} = 1000
+\item 
+const static int \mbox{\hyperlink{classAssembler_a93f8d6634f50b134f886cddedb7a0391}{R\+E\+G\+I\+S\+T\+E\+R\+S\+\_\+\+C\+O\+U\+NT}} = 16
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classAssembler_ac61ba65a05a9622eb90ad7aaa6306dda}\label{classAssembler_ac61ba65a05a9622eb90ad7aaa6306dda}} 
+\index{Assembler@{Assembler}!Assembler@{Assembler}}
+\index{Assembler@{Assembler}!Assembler@{Assembler}}
+\doxysubsubsection{\texorpdfstring{Assembler()}{Assembler()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily Assembler\+::\+Assembler (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Construct a new \mbox{\hyperlink{classAssembler}{Assembler}} object. 
+
+\mbox{\Hypertarget{classAssembler_a898ad743c2f623a3df00c6e7758513ae}\label{classAssembler_a898ad743c2f623a3df00c6e7758513ae}} 
+\index{Assembler@{Assembler}!Assembler@{Assembler}}
+\index{Assembler@{Assembler}!Assembler@{Assembler}}
+\doxysubsubsection{\texorpdfstring{Assembler()}{Assembler()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily Assembler\+::\+Assembler (\begin{DoxyParamCaption}\item[{int}]{argc,  }\item[{char $\ast$}]{argv\mbox{[}$\,$\mbox{]} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Construct a new \mbox{\hyperlink{classAssembler}{Assembler}} object. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em argc} & The number of arguments at the input \\
+\hline
+{\em argv} & The array of arguments must contain two values\+: the command to run the executable file and the full name of the file in which the text/code is analyzed \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classAssembler_af8aae33b7a5079fd8081aa623f1011fc}\label{classAssembler_af8aae33b7a5079fd8081aa623f1011fc}} 
+\index{Assembler@{Assembler}!AssignMemory@{AssignMemory}}
+\index{AssignMemory@{AssignMemory}!Assembler@{Assembler}}
+\doxysubsubsection{\texorpdfstring{AssignMemory()}{AssignMemory()}}
+{\footnotesize\ttfamily bool Assembler\+::\+Assign\+Memory (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{info }\end{DoxyParamCaption})}
+
+
+
+Filling in registers. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em info} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true Successful completion 
+
+false Error while adding or memory overflow 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classAssembler_a28c0f15a289d74bb3ba9574b0d013911}\label{classAssembler_a28c0f15a289d74bb3ba9574b0d013911}} 
+\index{Assembler@{Assembler}!CreateOperands@{CreateOperands}}
+\index{CreateOperands@{CreateOperands}!Assembler@{Assembler}}
+\doxysubsubsection{\texorpdfstring{CreateOperands()}{CreateOperands()}}
+{\footnotesize\ttfamily void Assembler\+::\+Create\+Operands (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{info,  }\item[{const std\+::string \&}]{line,  }\item[{const std\+::string \&}]{label,  }\item[{int \&}]{adr }\end{DoxyParamCaption})}
+
+
+
+Create a Operands object. Adding to the table. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em info} & Name of the instruction \\
+\hline
+{\em line} & A string for entering data into the class \\
+\hline
+{\em label} & Code label, if available \\
+\hline
+{\em adr} & Address of the memory location to write to \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classAssembler_ad3fb27ada108c1e399eb3e4a8a66d8d2}\label{classAssembler_ad3fb27ada108c1e399eb3e4a8a66d8d2}} 
+\index{Assembler@{Assembler}!DisplayInfo@{DisplayInfo}}
+\index{DisplayInfo@{DisplayInfo}!Assembler@{Assembler}}
+\doxysubsubsection{\texorpdfstring{DisplayInfo()}{DisplayInfo()}}
+{\footnotesize\ttfamily void Assembler\+::\+Display\+Info (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Output of the entire contents of the operand table. 
+
+\mbox{\Hypertarget{classAssembler_a6a3d289edd3df97388d218ed7b6b8470}\label{classAssembler_a6a3d289edd3df97388d218ed7b6b8470}} 
+\index{Assembler@{Assembler}!DisplayMemory@{DisplayMemory}}
+\index{DisplayMemory@{DisplayMemory}!Assembler@{Assembler}}
+\doxysubsubsection{\texorpdfstring{DisplayMemory()}{DisplayMemory()}}
+{\footnotesize\ttfamily void Assembler\+::\+Display\+Memory (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Output of information in registers. 
+
+\mbox{\Hypertarget{classAssembler_ab7d8739cfa05f83b5b635d69fd9d96e4}\label{classAssembler_ab7d8739cfa05f83b5b635d69fd9d96e4}} 
+\index{Assembler@{Assembler}!GetRegister@{GetRegister}}
+\index{GetRegister@{GetRegister}!Assembler@{Assembler}}
+\doxysubsubsection{\texorpdfstring{GetRegister()}{GetRegister()}}
+{\footnotesize\ttfamily std\+::string Assembler\+::\+Get\+Register (\begin{DoxyParamCaption}\item[{const int}]{position }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Get the Register object. New information in memory array. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em position} & Register number \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+std\+::string Information 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classAssembler_ab3bd2b658153726949d24e2dcfa13a8c}\label{classAssembler_ab3bd2b658153726949d24e2dcfa13a8c}} 
+\index{Assembler@{Assembler}!ParseInstruction@{ParseInstruction}}
+\index{ParseInstruction@{ParseInstruction}!Assembler@{Assembler}}
+\doxysubsubsection{\texorpdfstring{ParseInstruction()}{ParseInstruction()}}
+{\footnotesize\ttfamily std\+::string Assembler\+::\+Parse\+Instruction (\begin{DoxyParamCaption}\item[{std\+::string \&}]{my\+\_\+str,  }\item[{const int}]{numb\+\_\+str }\end{DoxyParamCaption})}
+
+
+
+Parsing the line from file. In case of an error during parsing, returns the value E\+R\+R\+OR. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em my\+\_\+str} & Retrieves a string from a file for parsing \\
+\hline
+{\em numb\+\_\+str} & We get the line number in the file, in case of an error, we output the line number and the line itself \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+std\+::string returns the received instruction 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classAssembler_afdce08b19c654549258c8a8e46a37612}\label{classAssembler_afdce08b19c654549258c8a8e46a37612}} 
+\index{Assembler@{Assembler}!RunAssembler@{RunAssembler}}
+\index{RunAssembler@{RunAssembler}!Assembler@{Assembler}}
+\doxysubsubsection{\texorpdfstring{RunAssembler()}{RunAssembler()}}
+{\footnotesize\ttfamily void Assembler\+::\+Run\+Assembler (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Launching the Emulator. 
+
+\mbox{\Hypertarget{classAssembler_a5553bff9785df47986c189ef6bdc0243}\label{classAssembler_a5553bff9785df47986c189ef6bdc0243}} 
+\index{Assembler@{Assembler}!SetRegistor@{SetRegistor}}
+\index{SetRegistor@{SetRegistor}!Assembler@{Assembler}}
+\doxysubsubsection{\texorpdfstring{SetRegistor()}{SetRegistor()}}
+{\footnotesize\ttfamily void Assembler\+::\+Set\+Registor (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{info,  }\item[{const int}]{position }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Set the Registor object. In case of errors when parsing the file, exit the program with the corresponding message. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em info} & Information to be entered into the memory register \\
+\hline
+{\em position} & Register number \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classAssembler_a5310e751c602344ae783730380e9260a}\label{classAssembler_a5310e751c602344ae783730380e9260a}} 
+\index{Assembler@{Assembler}!WriteInstruction@{WriteInstruction}}
+\index{WriteInstruction@{WriteInstruction}!Assembler@{Assembler}}
+\doxysubsubsection{\texorpdfstring{WriteInstruction()}{WriteInstruction()}}
+{\footnotesize\ttfamily bool Assembler\+::\+Write\+Instruction (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Parsing the entire file. 
+
+\begin{DoxyReturn}{Returns}
+true Success parsing 
+
+false Parsing error, output 
+\end{DoxyReturn}
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{classAssembler_ad93d1d09c3189e5b9b2a583058b0044c}\label{classAssembler_ad93d1d09c3189e5b9b2a583058b0044c}} 
+\index{Assembler@{Assembler}!MAX\_MEMORY@{MAX\_MEMORY}}
+\index{MAX\_MEMORY@{MAX\_MEMORY}!Assembler@{Assembler}}
+\doxysubsubsection{\texorpdfstring{MAX\_MEMORY}{MAX\_MEMORY}}
+{\footnotesize\ttfamily const static int Assembler\+::\+M\+A\+X\+\_\+\+M\+E\+M\+O\+RY = 1000\hspace{0.3cm}{\ttfamily [static]}}
+
+
+\begin{DoxyParams}{Parameters}
+{\em M\+A\+X\+\_\+\+M\+E\+M\+O\+RY} & Maximum memory of the processor emulator \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classAssembler_a93f8d6634f50b134f886cddedb7a0391}\label{classAssembler_a93f8d6634f50b134f886cddedb7a0391}} 
+\index{Assembler@{Assembler}!REGISTERS\_COUNT@{REGISTERS\_COUNT}}
+\index{REGISTERS\_COUNT@{REGISTERS\_COUNT}!Assembler@{Assembler}}
+\doxysubsubsection{\texorpdfstring{REGISTERS\_COUNT}{REGISTERS\_COUNT}}
+{\footnotesize\ttfamily const static int Assembler\+::\+R\+E\+G\+I\+S\+T\+E\+R\+S\+\_\+\+C\+O\+U\+NT = 16\hspace{0.3cm}{\ttfamily [static]}}
+
+
+\begin{DoxyParams}{Parameters}
+{\em R\+E\+G\+I\+S\+T\+E\+R\+S\+\_\+\+C\+O\+U\+NT} & Number of registers in the processor \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+assembler.\+hpp\end{DoxyCompactItemize}

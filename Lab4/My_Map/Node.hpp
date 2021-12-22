@@ -1,4 +1,4 @@
-#include<iostream>
+#include <iostream>
 #pragma once	
 
 enum COLOR { RED, BLACK };
@@ -15,8 +15,6 @@ public:
 
 	Node(T1 key, T2 data) : key(key), data(data) {
 		parent = left = right = nullptr;
-		// Node<T1, T2> is created during insertion 
-		// Node<T1, T2> is 0 at insertion 
 		color = RED;
 	}
 	~Node() = default;

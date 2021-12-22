@@ -1,8 +1,8 @@
-#include <iostream>
-#include "Node.h"
-#include "NormalList.h"
 
-template<typename T1, typename T2>
+#include <iostream>
+#include "Node.hpp"
+
+template <typename T1, typename T2>
 class Map_Iterator {
 public:
     Node <T1, T2>* _node;
@@ -72,8 +72,10 @@ public:
     }
 };
 
-template<typename T1, typename T2>
+template <typename T1, typename T2>
 class Map {
+private:
+	Node <T1, T2>* root;
 public:
     typedef Map_Iterator<T1, T2> iterator;
     iterator m_begin() const {
@@ -87,7 +89,7 @@ public:
     iterator m_end() const {
         iterator it;
         it._node = root;
-        while(it._node != NULL){
+        while(it._node != NULL) {
             it._node = it._node->right;
         }
         it.root = root;
@@ -96,7 +98,6 @@ public:
     }
 	iterator m_find (T1 x) const {
 		Node<T1, T2>* tmp = root;
-
 		while (tmp != NULL) {
 			if (tmp->key < x)
 					tmp = tmp->right;
@@ -107,8 +108,6 @@ public:
 		}
 		return iterator(tmp, root);
 	}
-private:
-	Node <T1, T2>* root;
 private:
 	void leftRotate(Node<T1, T2>* x) {
 		Node <T1, T2>* nParent = x->right;
@@ -350,8 +349,9 @@ private:
 public:
 
 	Map() { root = nullptr; }
-	~Map() { clear(root); 
-	root = nullptr;
+	~Map() { 
+		clear(root); 
+		root = nullptr;
 	};
 
 	Node<T1, T2>* getRoot() { return root; }
@@ -424,9 +424,9 @@ public:
 			if (root->parent != nullptr && root->parent->key >= root->key)
 			{
 				if (root->color == 0)
-					std::cout << "r"; //SetColor(12, 0);
+					std::cout << "r";
 				else
-					std::cout << "b"; //SetColor(9, 0);
+					std::cout << "b";
 				std::cout << "\\" << root->data;	
 				std::cout << std::endl;
 			}
@@ -449,50 +449,6 @@ public:
 		}
 	}
 
-
-	List<T1>* getListKey(Node<T1, T2>* root, List<T1>* A)
-	{
-		if (root)
-		{
-			getListKey(root->left, A);
-			getListKey(root->right, A);
-			A->push_back(root->key);
-		}
-		return A;
-	}
-
-	List<T2>* getListData(Node<T1, T2>* root, List<T2>* A)
-	{
-		if (root)
-		{
-			getListData(root->left, A);
-			getListData(root->right, A);
-			A->push_back(root->data);
-
-		}
-		return A;
-	}
-	
-	void printListKey(List<T1>* list)
-	{
-		while (!list->isEmpty())
-		{
-			std::cout << list->at(0);
-			std::cout << std::endl;
-			list->pop_front();
-		}
-	}
-
-	void printListData(List<T2>* list)
-	{
-		while (!list->isEmpty())
-		{
-			std::cout << list->at(0);
-			std::cout << std::endl;
-			list->pop_front();
-		}
-	}
-
 	void clear(Node<T1,T2>* root)
 	{
 		if (root)
@@ -503,4 +459,3 @@ public:
 		}
 	}
 };
-
